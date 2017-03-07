@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <MENU MENU_NAME="主菜单">
+        <REMINDER MENU_NAME="提醒" MENU_ID="lbtnReminder" MENU_CMD="LinkReminder" TARGET="cmsbody" />
+        <EXIT MENU_NAME="退出" MENU_CMD="Link" DEST="Logout" TARGET="_top" />
+    </MENU>
+</CONFIG>

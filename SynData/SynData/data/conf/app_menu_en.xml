@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <MENU_RECORD MENU_NAME="Operation">
+		<MENU_PRINT_LIST MENU_NAME="Print table" RIGHTS="4096" REQ_TYPE="POPUP" POS_TABLE1="1" POS_TABLE2="1" RECORD="0" TARGET="_blank" MENU_URL="/rispweb/risphost/HSPrintTable.aspx?mnunopost=yes" WIN_LEFT="20" WIN_TOP="20" WIN_WIDTH="760" WIN_HEIGHT="560" WIN_MENUBAR="yes" WIN_TOOLBAR="yes" WIN_LOCATION="no" WIN_RESIZABLE="yes" WIN_SCROLLBARS="yes" WIN_TITLEBAR="no" WIN_FULLSCREEN="no" />
+        <MENU_RECCUT MENU_NAME="Cut" MENU_CMD="MenuRecordCut" RIGHTS="8" REQ_TYPE="POST" POS_TABLE1="1" POS_TABLE2="1" RECORD="2" TARGET="_self" MENU_IMAGE="/rispweb/images/cut.gif" CLIENT_CONFIG="SYS_ENABLE_REC_CUT_PASTE_20090423" />
+        <MENU_RECPASTE MENU_NAME="Paste" MENU_CMD="MenuRecordPaste" RIGHTS="2" REQ_TYPE="POST" POS_TABLE1="1" POS_TABLE2="1" RECORD="0" TARGET="_self" MENU_IMAGE="/rispweb/images/paste.gif" CLIENT_CONFIG="SYS_ENABLE_REC_CUT_PASTE_20090423" />
+        <MENU_DICTTEMPLATE MENU_NAME="Copy dictionary" RIGHTS="2" REQ_TYPE="GET" POS_TABLE1="1" POS_TABLE2="1" RECORD="0" TARGET="_self" MENU_URL="/rispweb/adminres/DictTemplateCopy.aspx" TABLE_TYPE="TWOD" CLIENT_CONFIG="SYS_ENABLE_DICT_COPY_20090423" />
+        <MENU_DOCHISTORY MENU_NAME="Document History" RIGHTS="4" DESC="此菜单Key: MENU_DOCHISTORY 已经被固定写入代码，所以不能修改" REQ_TYPE="GET" POS_TABLE1="1" POS_TABLE2="1" RECORD="1" TARGET="_self" TABLE_TYPE="DOC" MENU_URL="/rispweb/rispdocument/DocHistoryList.aspx" SYS_FUNC="FUNC_DOC_HISTORY_20070425" />
+        <MENU_SHOW_RECID MENU_NAME="Show record ID" MENU_CMD="MenuRecordShowRecID" RIGHTS="0" REQ_TYPE="POST" POS_TABLE1="1" RECORD="0" TARGET="_self" />
+    </MENU_RECORD>
+    <MENU_SEARCH MENU_NAME="More">
+        <MENU_ADVANCE_SEARCH MENU_NAME="AdvSearch" RIGHTS="1" REQ_TYPE="GET" POS_TABLE1="1" POS_TABLE2="1" RECORD="0" TARGET="_self" MENU_URL="/rispweb/risptools/HSAdvsearch.aspx" />
+        <MENU_PRESEARCH MENU_NAME="PreSearch" RIGHTS="1" REQ_TYPE="GET" POS_TABLE1="1" POS_TABLE2="1" RECORD="0" TARGET="_self" MENU_URL="/rispweb/risptools/HSPresearch.aspx" />
+        <MENU_SEP />
+        <MENU_FTSEARCH MENU_NAME="Fulltext Search" MENU_CMD="MenuSearchFullText" RIGHTS="1" DESC="此菜单Key: MENU_FTSEARCH 已经被固定写入代码，所以不能修改" REQ_TYPE="POST" POS_TABLE1="1" POS_TABLE2="1" RECORD="0" TARGET="_self" MENU_IMAGE="/rispweb/images/Icons/oMessage.gif" TABLE_TYPE="DOC" SYS_FUNC="FUNC_DOC_FULLTEXT_SEARCH_20070425" />
+        <MENU_SEP />
+        <MENU_SUM MENU_NAME="SUM" MENU_CMD="MenuStatisticSum" RIGHTS="1" REQ_TYPE="POST" POS_TABLE1="1" POS_TABLE2="1" RECORD="0" TARGET="_self" />
+        <MENU_AVG MENU_NAME="AVG" MENU_CMD="MenuStatisticAvg" RIGHTS="1" REQ_TYPE="POST" POS_TABLE1="1" POS_TABLE2="1" RECORD="0" TARGET="_self" />
+        <MENU_MAX MENU_NAME="MAX" MENU_CMD="MenuStatisticMax" RIGHTS="1" REQ_TYPE="POST" POS_TABLE1="1" POS_TABLE2="1" RECORD="0" TARGET="_self" />
+        <MENU_MIN MENU_NAME="MIN" MENU_CMD="MenuStatisticMin" RIGHTS="1" REQ_TYPE="POST" POS_TABLE1="1" POS_TABLE2="1" RECORD="0" TARGET="_self" />
+        <MENU_SEP />
+        <MENU_UNIQUE MENU_NAME="No-Repeat column" MENU_CMD="MenuStatisticUnique" RIGHTS="1" REQ_TYPE="POST" POS_TABLE1="1" RECORD="0" TARGET="_self" />
+        <MENU_SAMECOL MENU_NAME="Repeat Columns" MENU_CMD="MenuListSameColumnValue" RIGHTS="1" REQ_TYPE="POST" POS_TABLE1="1" RECORD="0" TARGET="_self" />
+        <MENU_RELTABLE_UNMATCH_COL MENU_NAME="Unmatch columns" MENU_CMD="MenuUnmatchColInSubTable" RIGHTS="1" REQ_TYPE="POST" POS_TABLE1="1" RECORD="0" TARGET="_self" HAS_SUBTABLE="1" />
+    </MENU_SEARCH>
+    <MENU_RESMANAGER MENU_NAME="Operation" DESC="Resource tree">
+        <MENU_COLUMNSET MENU_NAME="Column" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/rispfield/HSColumnSet.aspx" />
+        <MENU_COLUMNSHOWSET MENU_NAME="Display" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/rispfield/HSColumnShow.aspx" />
+        <MENU_ORDER MENU_NAME="Order" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/rispfield/ResourceColumnOrderby.aspx" />
+        <MENU_INPUTFORM MENU_NAME="Form" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/rispform/FormListPage.aspx?mnuformtype=0" />
+        <MENU_RELATEDTABLE MENU_NAME="Relation" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/adminres/ResourceRelationList.aspx" />
+        <MENU_FORMULA MENU_NAME="Formula" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/rispfield/FieldAdvCalculationList.aspx" />
+        <MENU_BATCHINPUT MENU_NAME="Batch Input" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/adminres/BiAdminList.aspx" />
+        <MENU_FUNCBTNS MENU_NAME="Func Buttons" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/adminres/HSResButton.aspx" />
+        <MENU_RIGHTSSET MENU_NAME="Rights" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/risprights/HSRightsSet.aspx" />
+        <MENU_SEP />
+        <MENU_BATCHUPDATE_FIELD MENU_NAME="Update column" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/risptools/HSUpdateColumn.aspx" />
+        <MENU_BATCHUPDATE_RECORDS MENU_NAME="Update row" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/risptools/HSUpdateRow.aspx" />
+        <MENU_TREE_ADD MENU_NAME="Add favorite" FORM_NAME="" RIGHTS="0" REQ_TYPE="POST" MENU_CMD="MenuFavoriteAdd" POS_TREE="1" TARGET="_self" CLIENT_CONFIG="SYS_ENABLE_FAVORITE_20090527" />
+        <MENU_SEP />
+        <MENU_RES_ADD MENU_NAME="Add" MODULE_RIGHTS="1002" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminres/ResourceAddMain.aspx" />
+        <MENU_RES_EDIT MENU_NAME="Edit" MODULE_RIGHTS="1002" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminres/ResourceAddMain.aspx?isedit=1" />
+        <MENU_RES_DEL MENU_NAME="Delete" MODULE_RIGHTS="1002" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminres/ResourceDelete.aspx" />
+        <MENU_RES_MOVE MENU_NAME="Move" MODULE_RIGHTS="1002" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/risphost/HSResMove.aspx" />
+        <MENU_RES_MOVEUP MENU_NAME="Move up" FORM_NAME="" MODULE_RIGHTS="1002" REQ_TYPE="POST" MENU_CMD="MenuResTreeMoveup" POS_TREE="1" TARGET="_self" />
+        <MENU_RES_MOVEDOWN MENU_NAME="Move down" FORM_NAME="" MODULE_RIGHTS="1002" REQ_TYPE="POST" MENU_CMD="MenuResTreeMovedown" POS_TREE="1" TARGET="_self" />
+        <MENU_TREE_REFRESH MENU_NAME="Refresh" FORM_NAME="" RIGHTS="0" REQ_TYPE="POST" MENU_CMD="MenuResTreeRefresh" POS_TREE="1" TARGET="_self" />
+        <MENU_SEP />
+        <MENU_RES_SHOWID MENU_NAME="Show resource ID" FORM_NAME="" MODULE_RIGHTS="1002" REQ_TYPE="POST" MENU_CMD="MenuResTreeShowResID" POS_TREE="1" TARGET="_self" />
+        <MENU_SEP />
+        <MENU_HELP MENU_NAME="Help" REQ_TYPE="GET" POS_TREE="1" TARGET="content" MENU_URL="/rispweb/risphost/HSResourceHelp.aspx" />
+    </MENU_RESMANAGER>
+    <MENU_FAVORITE_MGR MENU_NAME="Operation" DESC="Favorite">
+        <MENU_FAVORITE_DEL MENU_NAME="Move away" FORM_NAME="" RIGHTS="0" REQ_TYPE="POST" MENU_CMD="MenuFavoriteDel" POS_TREE="1" TARGET="_self" />
+        <MENU_FAVORITE_MOVEUP MENU_NAME="Move up" FORM_NAME="" RIGHTS="0" REQ_TYPE="POST" MENU_CMD="MenuFavoriteMoveUp" POS_TREE="1" TARGET="_self" MENU_IMAGE="/rispweb/images/arrow_up.gif" />
+        <MENU_FAVORITE_MOVEDOWN MENU_NAME="Move down" FORM_NAME="" RIGHTS="0" REQ_TYPE="POST" MENU_CMD="MenuFavoriteMoveDown" POS_TREE="1" TARGET="_self" MENU_IMAGE="/rispweb/images/arrow_down.gif" />
+        <MENU_SEP />
+        <MENU_FAVORITE_REFRESH MENU_NAME="Refresh" FORM_NAME="" RIGHTS="0" REQ_TYPE="POST" MENU_CMD="MenuResTreeRefresh" POS_TREE="1" TARGET="_self" />
+    </MENU_FAVORITE_MGR>
+    <MENU_USER MENU_NAME="Operation" DESC="User" DESC2="以下菜单不管是GET还是POST命令，都必须定义MENU_CMD，代码中用到">
+        <MENU_USER_ADD_DEP MENU_NAME="Add department" MENU_CMD="MenuDepAdd" CLIENT_CONFIG="SYS_DEP_MANAGE_20090127" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminuser/HSDepartmentAdd.aspx" />
+        <MENU_USER_EDIT_DEP MENU_NAME="Edit department" MENU_CMD="MenuDepEdit" CLIENT_CONFIG="SYS_DEP_MANAGE_20090127" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminuser/HSDepartmentAdd.aspx" />
+        <MENU_USER_DEL_DEP MENU_NAME="Delete department" MENU_CMD="MenuDepDelete" CLIENT_CONFIG="SYS_DEP_MANAGE_20090127" REQ_TYPE="POST" POS_TREE="1" TARGET="_self" />
+        <MENU_USER_MOVE_DEP MENU_NAME="Move department" MENU_CMD="MenuDepMove" CLIENT_CONFIG="SYS_DEP_MANAGE_20090127" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminuser/HSDepartmentMove.aspx" />
+        <MENU_SEP />
+        <MENU_USER_ADD_GRP MENU_NAME="Add group" MENU_CMD="MenuGroupAdd" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminuser/HSDepartmentAdd.aspx" />
+        <MENU_USER_EDIT_GRP MENU_NAME="Edit group" MENU_CMD="MenuGroupEdit" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminuser/HSDepartmentAdd.aspx" />
+        <MENU_USER_DEL_GRP MENU_NAME="Delete group" MENU_CMD="MenuGroupDelete" REQ_TYPE="POST" POS_TREE="1" TARGET="_self" />
+        <MENU_USER_MOVE_GRP MENU_NAME="Move group" MENU_CMD="MenuGroupMove" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminuser/HSDepartmentMove.aspx" />
+        <MENU_SEP />
+        <!--
+        <MENU_USER_MOVEUP MENU_NAME="Move up" MENU_CMD="MenuTreeMoveup" REQ_TYPE="POST" POS_TREE="1" TARGET="_self" />
+        <MENU_USER_MOVEDOWN MENU_NAME="Move down" MENU_CMD="MenuTreeMovedown" REQ_TYPE="POST" POS_TREE="1" TARGET="_self" />
+        -->
+        <MENU_USER_REFRESH MENU_NAME="Refresh" MENU_CMD="MenuTreeRefresh" REQ_TYPE="POST" POS_TREE="1" TARGET="_self" />
+        <MENU_SEP />
+        <MENU_USER_COLUMN MENU_NAME="Column" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/rispfield/HSColumnSet.aspx?mnuresid=1300" />
+        <MENU_USER_SHOW MENU_NAME="Show" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/rispfield/HSColumnShow.aspx?mnuresid=1300" />
+        <MENU_USER_FORM MENU_NAME="Form" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/rispform/FormListPage.aspx?mnuresid=1300[AND]mnuformtype=0" />
+    </MENU_USER>
+    <MENU_EMP MENU_NAME="Operation" DESC="User" DESC2="以下菜单不管是GET还是POST命令，都必须定义MENU_CMD，代码中用到">
+        <MENU_EMP_ADD_DEP MENU_NAME="Add department" MENU_CMD="MenuDepAdd" CLIENT_CONFIG="SYS_DEP_MANAGE_20090127" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminuser/HSDepartmentAdd.aspx" />
+        <MENU_EMP_EDIT_DEP MENU_NAME="Edit department" MENU_CMD="MenuDepEdit" CLIENT_CONFIG="SYS_DEP_MANAGE_20090127" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminuser/HSDepartmentAdd.aspx" />
+        <MENU_EMP_DEL_DEP MENU_NAME="Delete department" MENU_CMD="MenuDepDelete" CLIENT_CONFIG="SYS_DEP_MANAGE_20090127" REQ_TYPE="POST" POS_TREE="1" TARGET="_self" />
+        <MENU_EMP_MOVE_DEP MENU_NAME="Move department" MENU_CMD="MenuDepMove" CLIENT_CONFIG="SYS_DEP_MANAGE_20090127" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/adminuser/HSDepartmentMove.aspx" />
+        <MENU_SEP />
+        <MENU_EMP_REFRESH MENU_NAME="Refresh" MENU_CMD="MenuTreeRefresh" REQ_TYPE="POST" POS_TREE="1" TARGET="_self" />
+    </MENU_EMP>
+    <MENU_REPORT MENU_NAME="Report group" DESC="Report group" DESC2="以下菜单不管是GET还是POST命令，都必须定义MENU_CMD，代码中用到">
+        <MENU_REPORT_ADD MENU_NAME="Add" MENU_CMD="MenuReportAdd" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/rispreport/HSReportGroupAdd.aspx" />
+        <MENU_REPORT_EDIT MENU_NAME="Edit" MENU_CMD="MenuReportEdit" REQ_TYPE="GET" POS_TREE="1" TARGET="_parent" MENU_URL="/rispweb/rispreport/HSReportGroupAdd.aspx" />
+        <MENU_REPORT_DEL MENU_NAME="Delete" MENU_CMD="MenuReportDelete" REQ_TYPE="POST" POS_TREE="1" TARGET="_self" />
+        <MENU_SEP />
+        <MENU_REPORT_MOVEUP MENU_NAME="Move up" MENU_CMD="MenuReportTreeMoveup" REQ_TYPE="POST" POS_TREE="1" TARGET="_self" />
+        <MENU_REPORT_MOVEDOWN MENU_NAME="Move down" MENU_CMD="MenuReportTreeMovedown" REQ_TYPE="POST" POS_TREE="1" TARGET="_self" />
+        <MENU_REPORT_REFRESH MENU_NAME="Refresh" MENU_CMD="MenuReportTreeRefresh" REQ_TYPE="POST" POS_TREE="1" TARGET="_self" />
+    </MENU_REPORT>
+</CONFIG>

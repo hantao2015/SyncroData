@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <MENU MENU_NAME="Main menu">
+        <HOSTPAGE MENU_NAME="Home" MENU_CMD="LinkHost" TARGET="cmsbody" />
+        <REMINDER MENU_NAME="Reminder" MENU_ID="lbtnReminder" MENU_CMD="LinkReminder" TARGET="cmsbody" />
+        <REPORTS MENU_NAME="Report" MENU_CMD="LinkReport" TARGET="cmsbody" />
+        <TOOLS MENU_NAME="Tools" MENU_CMD="Menu" TARGET="cmstitle" />
+        <EXIT MENU_NAME="Exit" MENU_CMD="Link" DEST="Logout" TARGET="_top" />
+    </MENU>
+    <!--#################################################################################################################-->
+    <!--#################################################################################################################-->
+    <TOOLS MENU_NAME="Tools">
+        <CHANGE_PASS MENU_NAME="Password" MENU_CMD="Link" MENU_URL="/rispweb/risptools/hsMyPassword.aspx" TARGET="cmsbody" />
+        <CHANGE_LANGUAGE MENU_NAME="Language" MENU_CMD="Link" SYS_FUNC="FUNC_MULTI_LANGUAGE_20070425" MENU_URL="/rispweb/risptools/hsMyLanguage.aspx" TARGET="cmsbody" />
+        <CHANGE_PROFILE MENU_NAME="Profile" MENU_CMD="Link" MENU_URL="/rispweb/risptools/hsMyProfile.aspx" TARGET="cmsbody" />
+        <HOSTPAGE MENU_NAME="Host" MENU_ID="" MENU_CMD="LinkHost" TARGET="cmsbody" />
+        <FAVORITES MENU_NAME="Favorite" MENU_CMD="Link" CLIENT_CONFIG="SYS_ENABLE_FAVORITE_20090527" MENU_URL="/rispweb/risphost/hsBodyFavorite.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <SEARCH_DOC MENU_NAME="Search document" MENU_CMD="Link" SYS_FUNC="FUNC_DOC_FULLDB_SEARCH_20070425" MENU_URL="/rispweb/rispdocument/DocSearchFullDb.aspx" TARGET="cmsbody" />
+        <SMS_SEND MENU_NAME="Send short message" MENU_CMD="Link" SYS_FUNC="FUNC_SMS_PLATFORM_20071030" MODULE_RIGHTS="1004" MENU_URL="/rispweb/rispothers/CommSendSms.aspx" TARGET="cmsbody" />
+        <SMS_BATCH MENU_NAME="Batch send message" MENU_CMD="Link" SYS_FUNC="FUNC_SMS_PLATFORM_20071030" MODULE_RIGHTS="1000" MENU_URL="/rispweb/rispsend/BsendSmsList.aspx" TARGET="cmsbody" />
+        <EMAIL_SEND MENU_NAME="Send email" MENU_CMD="Link" SYS_FUNC="FUNC_EMAIL_SMS_PLATFORM_20070425" MODULE_RIGHTS="1005" MENU_URL="/rispweb/rispothers/CommSendEmail.aspx" TARGET="cmsbody" />
+        <EMAIL_BATCH MENU_NAME="Batch send email" MENU_CMD="Link" SYS_FUNC="FUNC_EMAIL_SMS_PLATFORM_20070425" MODULE_RIGHTS="1001" MENU_URL="/rispweb/rispsend/BsendEmailList.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <DEBUG MENU_NAME="Debug" MENU_CMD="Link" ALL_RIGHTS="1" MENU_URL="/rispweb/adminsys/SysDebug.aspx" TARGET="cmsbody" />
+        <ONLINE_USER MENU_NAME="Online users" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysOnlineUsers.aspx" TARGET="cmsbody" />
+        <GET_LOG MENU_NAME="Log file" MENU_CMD="Link" ALL_RIGHTS="1" MENU_URL="/rispweb/adminsys/SysGetLog.aspx" TARGET="cmsbody" />
+        <GET_BARCODE MENU_NAME="Barcode" MENU_CMD="Link" SYS_FUNC="FUNC_BARCODE_20070604" MENU_URL="/rispweb/risphost/BarcodeGenerateImageFile.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <USERS MENU_NAME="User" MENU_ID="" MENU_CMD="Link" MODULE_RIGHTS="1101" MENU_URL="/rispweb/adminuser/hsUserRouter.aspx" TARGET="cmsbody" />
+        <RESOURCE MENU_NAME="Resource" MENU_ID="" MENU_CMD="Link" MODULE_RIGHTS="1103" MENU_URL="/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <REPORT_MGR MENU_NAME="Report manager" MENU_ID="" MENU_CMD="Link" MODULE_RIGHTS="1104" MENU_URL="/rispweb/rispreport/hsReportRouter.aspx" TARGET="cmsbody" />
+        <LOGMGR MENU_NAME="Search log" MENU_CMD="Link" MODULE_RIGHTS="1003" MENU_URL="/rispweb/adminsys/hsLog.aspx" MENU_IMAGE="/rispweb/images/titleicon/sub.gif" TARGET="cmsbody" />
+        <RIGHTS_BASIC MENU_NAME="Basic rights" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_simple" TARGET="cmsbody" />
+        <RIGHTS_ALL MENU_NAME="All rights" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_all" TARGET="cmsbody" />
+        <RIGHTS_COMPLEX MENU_NAME="Advance rights" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_complex" TARGET="cmsbody" />
+        <RIGHTS_MENU MENU_NAME="Menu rights" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_menu" TARGET="cmsbody" />
+        <RIGHTS_REPORT MENU_NAME="Report rights" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_reports" TARGET="cmsbody" />
+        <!--<RIGHTS_REMINDER MENU_NAME="Reminder rights" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_reminder" TARGET="cmsbody" />-->
+        <RIGHTS_BYRES MENU_NAME="Resource rights" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_res" TARGET="cmsbody" />
+        <RIGHTS_BYMODULE MENU_NAME="Module rights" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/hsSysFuncRights.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <ABOUT_US MENU_NAME="About us" MENU_CMD="Link" MENU_URL="/rispweb/rispothers/aboutus.htm" TARGET="cmsbody" />
+    </TOOLS>
+</CONFIG>

@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <MENU MENU_NAME="Main menu">
+        <USERS MENU_NAME="User" MENU_ID="" MENU_CMD="Link" MENU_URL="/rispweb/adminUser/hsUserRouter.aspx" TARGET="cmsbody" />
+        <RESOURCE MENU_NAME="Resource" MENU_ID="" MENU_CMD="Link" MENU_URL="/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <REPORT_MGR MENU_NAME="Report" MENU_ID="" MENU_CMD="Link" MENU_URL="/rispweb/rispreport/hsReportRouter.aspx" TARGET="cmsbody" />
+        <USER_RIGHTS MENU_NAME="Rights" MENU_CMD="Menu" TARGET="cmsbody" />
+        <UPGRADE MENU_NAME="Upgrade" MENU_CMD="Menu" TARGET="cmstitle" />
+        <MANAGE MENU_NAME="Manage" MENU_CMD="Menu" TARGET="cmstitle" />
+        <TOOLS MENU_NAME="Tools" MENU_CMD="Menu" TARGET="cmstitle" />
+        <EXIT MENU_NAME="Exit" MENU_CMD="Link" DEST="Logout" TARGET="_top" />
+    </MENU>
+    <!--#################################################################################################################-->
+    <!--#################################################################################################################-->
+    <UPGRADE MENU_NAME="Upgrade">
+        <UPDATE_VER MENU_NAME="Upgrade version" MENU_ID="" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysDbUpdate.aspx" TARGET="cmsbody" />
+        <UPDATE_CONFIG MENU_NAME="Upgrade config" MENU_ID="" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysUpdateConfigFile.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <UPDATE_ADVCONFIG MENU_NAME="Advance upgrade" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysConfigUpdate.aspx" TARGET="cmsbody" />
+        <RUN_SQL MENU_NAME="Run SQL" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysDbUpdateManual.aspx" TARGET="cmsbody" />
+        <MAINTENANCE MENU_NAME="Maintenance" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysDbMaintain.aspx" TARGET="cmsbody" />
+    </UPGRADE>
+    <!--#################################################################################################################-->
+    <!--#################################################################################################################-->
+    <USER_RIGHTS MENU_NAME="Rights">
+        <RIGHTS_BASIC MENU_NAME="Basic" MENU_CMD="Link" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_simple" TARGET="cmsbody" />
+        <RIGHTS_ALL MENU_NAME="All" MENU_CMD="Link" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_all" TARGET="cmsbody" />
+        <RIGHTS_COMPLEX MENU_NAME="Advance" MENU_CMD="Link" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_complex" TARGET="cmsbody" />
+        <RIGHTS_MENU MENU_NAME="Menu" MENU_CMD="Link" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_menu" TARGET="cmsbody" />
+        <RIGHTS_REPORT MENU_NAME="Reports" MENU_CMD="Link" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_reports" TARGET="cmsbody" />
+        <!--<RIGHTS_REMINDER MENU_NAME="Reminder" MENU_CMD="Link" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_reminder" TARGET="cmsbody" />-->
+        <RIGHTS_BYRES MENU_NAME="By resource" MENU_CMD="Link" MENU_URL="/rispweb/risprights/hsRightsRouter.aspx?rights_mode=rmode_res" TARGET="cmsbody" />
+        <RIGHTS_BYMODULE MENU_NAME="By module" MENU_CMD="Link" MENU_URL="/rispweb/risprights/hsSysFuncRights.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <RIGHTS_V2 MENU_NAME="Rights v2" MENU_CMD="Link" MENU_URL="/rispweb/risprights/hsModuleRightsFrame.aspx?modrights_type=module" TARGET="cmsbody" />
+    </USER_RIGHTS>
+    <!--#################################################################################################################-->
+    <!--#################################################################################################################-->
+    <MANAGE MENU_NAME="Manage">
+        <FORMULA MENU_NAME="Formula" MENU_CMD="Link" MENU_URL="/rispweb/rispfield/FieldAdvCalculationList.aspx?mnuresid=0[AND]backpage=/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <PRESEARCH MENU_NAME="Presearch" MENU_CMD="Link" MENU_URL="/rispweb/adminres/MtsPresearchHost.aspx?mtstype=3[AND]mnufromadmin=adminpage[AND]backpage=/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <MY_PRESEARCH MENU_NAME="My presearch" MENU_CMD="Link" MENU_URL="/rispweb/adminres/MtsPresearchHost.aspx?mtstype=4[AND]mnufromadmin=adminpage[AND]backpage=/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <BATCH_INPUT MENU_NAME="Batch input" MENU_CMD="Link" MENU_URL="/rispweb/adminres/BiAdminList.aspx?backpage=/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <DATA_SYNCHRONIZE MENU_NAME="Data synchronize" MENU_CMD="Link" MENU_URL="/rispweb/adminres/ResourceSyncList.aspx?backpage=/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <AUTOSAVE MENU_NAME="Auto save" MENU_CMD="Link" MENU_URL="/rispweb/adminres/ResourceAdminAutoSaveList.aspx?backpage=/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <HEXIAO MENU_NAME="Verification" MENU_CMD="Link" SYS_FUNC="FUNC_BIZALLOT_20070425" MENU_URL="/rispweb/finance/hsHexiao.aspx" MENU_IMAGE="/rispweb/images/titleicon/table3.gif" TARGET="cmsbody" />
+        <ALLOT MENU_NAME="Allot" MENU_CMD="Link" SYS_FUNC="FUNC_BIZALLOT_20070425" MENU_URL="/rispweb/finance/BizAllotMain.aspx" MENU_IMAGE="/rispweb/images/titleicon/table3.gif" TARGET="cmsbody" />
+        <MENU_SEP />
+        <OUTER_DATABASE MENU_NAME="Outer database" MENU_CMD="Link" MENU_URL="/rispweb/adminres/SysDbLinkList.aspx" TARGET="cmsbody" />
+        <AUTO_IMPORT MENU_NAME="Auto import" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/AutoImportListAdminPage.aspx" TARGET="cmsbody" />
+        <AUTO_RUN MENU_NAME="Auto run" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/AutoRunCodeListPage.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <EMAIL_BATCH MENU_NAME="Email send" MENU_CMD="Link" SYS_FUNC="FUNC_EMAIL_SMS_PLATFORM_20070425" MODULE_RIGHTS="1001" MENU_URL="/rispweb/rispsend/BsendEmailList.aspx" TARGET="cmsbody" />
+        <SMS_BATCH MENU_NAME="SMS send" MENU_CMD="Link" SYS_FUNC="FUNC_SMS_PLATFORM_20071030" MODULE_RIGHTS="1000" MENU_URL="/rispweb/rispsend/BsendSmsList.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <LOGMGR MENU_NAME="Search log" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/hsLog.aspx" MENU_IMAGE="/rispweb/images/titleicon/sub.gif" TARGET="cmsbody" />
+    </MANAGE>
+    <!--#################################################################################################################-->
+    <!--#################################################################################################################-->
+    <TOOLS MENU_NAME="Tools">
+        <GENERAL_CONFIG MENU_NAME="General config" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/DevClientParameter.aspx?backpage=/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <DEPUSER_CONFIG MENU_NAME="Department config" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/hsDepartmentUserConfig.aspx?backpage=/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <RESOURCE_CONFIG MENU_NAME="Resource config" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/hsResourceConfig.aspx?backpage=/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <USERPASS_CONFIG MENU_NAME="Password config" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/hsPasswordConfig.aspx?backpage=/rispweb/adminres/hsResource.aspx" TARGET="cmsbody" />
+        <EMAIL_CONFIG MENU_NAME="Email server" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysEmailSettings.aspx" MENU_IMAGE="/rispweb/images/titleicon/email.gif" TARGET="cmsbody" />
+        <MENU_SEP />
+        <SYS_VERSION MENU_NAME="Software version" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysVersion.aspx" TARGET="cmsbody" />
+        <CLIENT_CODE MENU_NAME="Client code" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysClientCode.aspx" TARGET="cmsbody" />
+        <LOGIN_PAGE MENU_NAME="Login page" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysLoginPage.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <CHANGE_PASS MENU_NAME="Password" MENU_CMD="Link" MENU_URL="/rispweb/risptools/hsMyPassword.aspx" TARGET="cmsbody" />
+        <CHANGE_LANGUAGE MENU_NAME="Language" MENU_CMD="Link" SYS_FUNC="FUNC_MULTI_LANGUAGE_20070425" MENU_URL="/rispweb/risptools/hsMyLanguage.aspx" TARGET="cmsbody" />
+        <CHANGE_PROFILE MENU_NAME="Profile" MENU_CMD="Link" MENU_URL="/rispweb/risptools/hsMyProfile.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <DEBUG MENU_NAME="Debug" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysDebug.aspx" TARGET="cmsbody" />
+        <LOGFILE MENU_NAME="Get log" MENU_ID="" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysGetLog.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <!--
+        <FORCE_PASS MENU_NAME="Password policy" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysForceToPassChange.aspx" TARGET="cmsbody" />
+        <EMPTY_PASS_USERS MENU_NAME="Empty pass" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysListUsersWithBlankPass.aspx" TARGET="cmsbody" />
+        -->
+        <ONLINE_USER MENU_NAME="Online users" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysOnlineUsers.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <PRODUCT_CODE MENU_NAME="Product code" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/CodeMgrProduct.aspx" TARGET="cmsbody" />
+        <USER_LICENSE MENU_NAME="User license" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/CodeMgrLicense.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <CHECK_FORMULA MENU_NAME="Check formula" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysCheckFormulaOrder.aspx" TARGET="cmsbody" />
+        <CHECK_FORMULA_COL MENU_NAME="Check formula - deleted col" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/hsFormulaCheckDeletedColumn.aspx" TARGET="cmsbody" />
+        <CHECK_FORMULA_RES MENU_NAME="Check formula - deleted res" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/hsFormulaCheckDeletedResource.aspx" TARGET="cmsbody" />
+        <USAGE_RESOURCE MENU_NAME="Resource usage" MENU_CMD="Link" MENU_URL="/rispweb/adminres/ResourceRelatedUsePage.aspx" TARGET="cmsbody" />
+        <USAGE_COLNAME MENU_NAME="Search column" MENU_CMD="Link" MENU_URL="/rispweb/rispfield/hsFieldUsageByColDispName.aspx" TARGET="cmsbody" />
+        <USAGE_FIELD MENU_NAME="Field usage" MENU_CMD="Link" MENU_URL="/rispweb/rispfield/FieldRelatedUsePageNoResID.aspx" TARGET="cmsbody" />
+        <!--<USAGE_PAGE MENU_NAME="Page usage" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/PageUsagePage.aspx" TARGET="cmsbody" />-->
+        <USAGE_CLASS MENU_NAME="Class usage" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/ClassUsagePage.aspx" TARGET="cmsbody" />
+        <USAGE_SQL MENU_NAME="SQL usage" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SqlUsagePage.aspx" TARGET="cmsbody" />
+        <USAGE_REPORT MENU_NAME="Report usage" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/ReportUsagePage.aspx" TARGET="cmsbody" />
+        <USAGE_DLL MENU_NAME="Dll usage" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/DllUsagePage.aspx" TARGET="cmsbody" />
+        <USAGE_JAVASCRIPT MENU_NAME="Javascript usage" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/hsJavascriptUsage.aspx" TARGET="cmsbody" />
+        <THREAD_SAFE MENU_NAME="Thread safe" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysTestCpu.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <GET_BARCODE MENU_NAME="Barcode" MENU_CMD="Link" SYS_FUNC="FUNC_BARCODE_20070604" MENU_URL="/rispweb/risphost/BarcodeGenerateImageFile.aspx" TARGET="cmsbody" />
+        <UNIQUE_VAL MENU_NAME="Unique value" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysUniqueValue.aspx" TARGET="cmsbody" />
+        <ABOUT_US MENU_NAME="About us" MENU_CMD="Link" MENU_URL="/rispweb/rispothers/aboutus.htm" TARGET="cmsbody" />
+    </TOOLS>
+</CONFIG>

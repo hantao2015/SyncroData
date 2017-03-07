@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <MENU MENU_NAME="主菜单">
+        <HOSTPAGE MENU_NAME="主页" MENU_CMD="LinkHost" TARGET="cmsbody" />
+        <REMINDER MENU_NAME="提醒" MENU_ID="lbtnReminder" MENU_CMD="LinkReminder" TARGET="cmsbody" />
+        <REPORTS MENU_NAME="报表" MENU_CMD="LinkReport" TARGET="cmsbody" />
+        <TOOLS MENU_NAME="工具" MENU_CMD="Menu" TARGET="cmstitle" />
+        <EXIT MENU_NAME="退出" MENU_CMD="Link" DEST="Logout" TARGET="_top" />
+    </MENU>
+ 
+  <!--#################################################################################################################-->
+    <!--#################################################################################################################-->
+    <TOOLS MENU_NAME="工具">
+        <CHANGE_PASS MENU_NAME="修改密码" MENU_CMD="Link" MENU_URL="/rispweb/risptools/HSMyPassword.aspx" TARGET="cmsbody" />
+      <CHANGE_SystemUI MENU_NAME="切换到简洁版" MENU_CMD="Link" MENU_URL="/rispweb/rispservice/SwitchSystemUi.aspx?uiver=200" TARGET="cmsbody" />
+     
+      <CHANGE_KQMonth MENU_NAME="切换考勤月份" MENU_CMD="Link" MENU_URL="/rispweb/rispproduct/att/RsMyAttMonth.aspx" TARGET="cmsbody" />
+        <CHANGE_LANGUAGE MENU_NAME="修改语言" MENU_CMD="Link" SYS_FUNC="FUNC_MULTI_LANGUAGE_20070425" MENU_URL="/rispweb/risptools/HSMyLanguage.aspx" TARGET="cmsbody" />
+        <CHANGE_PROFILE MENU_NAME="个人信息" MENU_CMD="Link" MENU_URL="/rispweb/risptools/HSMyProfile.aspx" TARGET="cmsbody" />
+        <HOSTPAGE MENU_NAME="主页" MENU_ID="" MENU_CMD="LinkHost" TARGET="cmsbody" />
+        <FAVORITES MENU_NAME="收藏夹" MENU_CMD="Link" CLIENT_CONFIG="SYS_ENABLE_FAVORITE_20090527" MENU_URL="/rispweb/risphost/HSBodyFavorite.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <SEARCH_DOC MENU_NAME="搜索文档" MENU_CMD="Link" SYS_FUNC="FUNC_DOC_FULLDB_SEARCH_20070425" MENU_URL="/rispweb/rispdocument/DocSearchFullDb.aspx" TARGET="cmsbody" />
+        <SMS_SEND MENU_NAME="发送短信" MENU_CMD="Link" SYS_FUNC="FUNC_SMS_PLATFORM_20071030" MODULE_RIGHTS="1004" MENU_URL="/rispweb/rispothers/CommSendSms.aspx" TARGET="cmsbody" />
+        <SMS_BATCH MENU_NAME="群发短信" MENU_CMD="Link" SYS_FUNC="FUNC_SMS_PLATFORM_20071030" MODULE_RIGHTS="1000" MENU_URL="/rispweb/rispsend/BsendSmsList.aspx" TARGET="cmsbody" />
+        <EMAIL_SEND MENU_NAME="发送邮件" MENU_CMD="Link" SYS_FUNC="FUNC_EMAIL_SMS_PLATFORM_20070425" MODULE_RIGHTS="1005" MENU_URL="/rispweb/rispothers/CommSendEmail.aspx" TARGET="cmsbody" />
+        <EMAIL_BATCH MENU_NAME="群发邮件" MENU_CMD="Link" SYS_FUNC="FUNC_EMAIL_SMS_PLATFORM_20070425" MODULE_RIGHTS="1001" MENU_URL="/rispweb/rispsend/BsendEmailList.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <DEBUG MENU_NAME="软件调试" MENU_CMD="Link" ALL_RIGHTS="1" MENU_URL="/rispweb/adminsys/SysDebug.aspx" TARGET="cmsbody" />
+        <ONLINE_USER MENU_NAME="在线用户" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/SysOnlineUsers.aspx" TARGET="cmsbody" />
+        <GET_LOG MENU_NAME="提取日志" MENU_CMD="Link" ALL_RIGHTS="1" MENU_URL="/rispweb/adminsys/SysGetLog.aspx" TARGET="cmsbody" />
+        <GET_BARCODE MENU_NAME="生成条形码" MENU_CMD="Link" SYS_FUNC="FUNC_BARCODE_20070604" MENU_URL="/rispweb/risphost/BarcodeGenerateImageFile.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <USERS MENU_NAME="用户" MENU_ID="" MENU_CMD="Link" MODULE_RIGHTS="1101" MENU_URL="/rispweb/adminuser/HSUserRouter.aspx" TARGET="cmsbody" />
+        <RESOURCE MENU_NAME="资源" MENU_ID="" MENU_CMD="Link" MODULE_RIGHTS="1103" MENU_URL="/rispweb/adminres/HSResource.aspx" TARGET="cmsbody" />
+        <REPORT_MGR MENU_NAME="报表管理" MENU_ID="" MENU_CMD="Link" MODULE_RIGHTS="1104" MENU_URL="/rispweb/rispreport/HSReportRouter.aspx" TARGET="cmsbody" />
+        <LOGMGR MENU_NAME="日志查询" MENU_CMD="Link" MODULE_RIGHTS="1003" MENU_URL="/rispweb/adminsys/HSLog.aspx" MENU_IMAGE="/rispweb/images/titleicon/sub.gif" TARGET="cmsbody" />
+        <RIGHTS_BASIC MENU_NAME="基本权限" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/HSRightsRouter.aspx?rights_mode=rmode_simple" TARGET="cmsbody" />
+        <RIGHTS_ALL MENU_NAME="全部权限" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/HSRightsRouter.aspx?rights_mode=rmode_all" TARGET="cmsbody" />
+        <RIGHTS_COMPLEX MENU_NAME="高级权限" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/HSRightsRouter.aspx?rights_mode=rmode_complex" TARGET="cmsbody" />
+        <RIGHTS_MENU MENU_NAME="菜单权限" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/HSRightsRouter.aspx?rights_mode=rmode_menu" TARGET="cmsbody" />
+        <RIGHTS_REPORT MENU_NAME="报表权限" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/HSRightsRouter.aspx?rights_mode=rmode_reports" TARGET="cmsbody" />
+        <!--<RIGHTS_REMINDER MENU_NAME="提醒权限" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/HSRightsRouter.aspx?rights_mode=rmode_reminder" TARGET="cmsbody" />-->
+        <RIGHTS_BYRES MENU_NAME="按资源授权" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/HSRightsRouter.aspx?rights_mode=rmode_res" TARGET="cmsbody" />
+        <RIGHTS_BYMODULE MENU_NAME="按系统功能授权" MENU_CMD="Link" MODULE_RIGHTS="1102" MENU_URL="/rispweb/risprights/HSSysFuncRights.aspx" TARGET="cmsbody" />
+        <MENU_SEP />
+        <ABOUT_US MENU_NAME="关于我们" MENU_CMD="Link" MENU_URL="/rispweb/rispothers/aboutus.htm" TARGET="cmsbody" />
+    </TOOLS>
+</CONFIG>

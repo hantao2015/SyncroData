@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <MENU MENU_NAME="Main menu">
+        <LOGMGR MENU_NAME="Search log" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/HSLog.aspx" TARGET="cmsbody" />
+        <CHANGE_PASS MENU_NAME="Password" MENU_CMD="Link" MENU_URL="/rispweb/risptools/HSMyPassword.aspx" TARGET="cmsbody" />
+        <CHANGE_LANGUAGE MENU_NAME="Language" MENU_CMD="Link" SYS_FUNC="FUNC_MULTI_LANGUAGE_20070425" MENU_URL="/rispweb/risptools/HSMyLanguage.aspx" TARGET="cmsbody" />
+        <EXIT MENU_NAME="Exit" MENU_CMD="Link" DEST="Logout" TARGET="_top" />
+    </MENU>
+</CONFIG>

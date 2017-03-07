@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <MENU MENU_NAME="主菜单">
+        <LOGMGR MENU_NAME="日志查询" MENU_CMD="Link" MENU_URL="/rispweb/adminsys/hsLog.aspx" TARGET="cmsbody" />
+        <CHANGE_PASS MENU_NAME="修改密码" MENU_CMD="Link" MENU_URL="/rispweb/risptools/hsMyPassword.aspx" TARGET="cmsbody" />
+        <CHANGE_LANGUAGE MENU_NAME="修改语言" MENU_CMD="Link" SYS_FUNC="FUNC_MULTI_LANGUAGE_20070425" MENU_URL="/rispweb/risptools/hsMyLanguage.aspx" TARGET="cmsbody" />
+        <EXIT MENU_NAME="退出" MENU_CMD="Link" DEST="Logout" TARGET="_top" />
+    </MENU>
+</CONFIG>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <SYS_DATABASE DESC="数据库配置信息">
+    <DATABASETYPE DESC="数据库HOST 0:mssql 3:oralce">0</DATABASETYPE>
+    <DATABASECONTYPE DESC="数据库连接方式 1:oledbcon 2:oracleclientcon">1</DATABASECONTYPE>
+    <HOST DESC="数据库HOST">www.realsun.me\demo</HOST>
+    <PORT DESC="数据库PORT">3433</PORT>
+    <DBCMS DESC="内容数据库名称">demo1</DBCMS>
+    <DBDOC DESC="文档数据库名称">demo2</DBDOC>
+    <TIMEOUT DESC="数据库连接超时（秒）">15</TIMEOUT>
+    <SERVICENAME DESC="Oracle 数据库服务名称">orcl</SERVICENAME>
+    <CmsSocketDbServerIp>139.196.188.134</CmsSocketDbServerIp>
+    <CmsSocketDbPort>2020</CmsSocketDbPort>
+    <CmsSocketUser>demo1</CmsSocketUser>
+    <CmsSocketUpass>31347750</CmsSocketUpass>
+    <ClientId>389</ClientId>
+    <PosServerIp>222.73.68.150</PosServerIp>
+    <PosServerPort>1500</PosServerPort>
+    <FileServerIp>139.196.188.134</FileServerIp>
+    <FileServerPort>2021</FileServerPort>
+    <DownFileServerIp>139.196.188.134</DownFileServerIp>
+    <DownFileServerPort>7777</DownFileServerPort>
+  
+</SYS_DATABASE>
+  <SYS_CLIENT SHOWENABLE="0">
+    <IMPLEMENT_CODE SHOWENABLE="0"></IMPLEMENT_CODE>
+    <ANONYMOUS_CODE SHOWENABLE="0"></ANONYMOUS_CODE>
+    <DBCMSUSER_NAME DESC="数据库访问用户" SHOWENABLE="0"></DBCMSUSER_NAME>
+    <DBCMSUSER_CODE DESC="加密后的数据库访问用户密码" SHOWENABLE="0"></DBCMSUSER_CODE>
+  </SYS_CLIENT>
+</CONFIG>
