@@ -10,19 +10,26 @@
     "upass": "kingofdinner@2017",
     "LoginToken":"KingOfDinner123456789",
    "SynDatas": [
-        {
-          "source_resid": "227186227531",
-          "target_resid": "539457701388",
-          "cmswhere": "C3_227192484125 like '%李%'",
-          "sourcefields": "C3_227192472953,C3_227192484125",
-          "targetfields": "C3_539457726192,C3_539457741668",
-          "pagesize": 100,
-          "uniquecolumns": "C3_539457726192",
-          "withoutdata": "1",
-          "synchronizedat": "1",
-          "_state":"editoradd"
+    {
+       "pushurl": "http://kingofdinner.realsun.me:8081/rispweb/",
+       "pushuser": "demo1",
+      "pushupass": "kingofdinner@2017",
+      "fetchurl": "http://kingofdinner.realsun.me:8081/rispweb/",
+       "fetchuser": "demo1",
+       "fetchupass": "kingofdinner@2017",
+      "syntype": "push",
+      "source_resid": "227186227531",
+      "target_resid": "539457701388",
+      "cmswhere": "C3_227192484125 like '%李%'",
+      "sourcefields": "C3_227192472953,C3_227192484125",
+      "targetfields": "C3_539457726192,C3_539457741668",
+      "pagesize": 100,
+      "uniquecolumns": "C3_539457726192",
+      "withoutdata": "1",
+      "synchronizedat": "1",
+      "_state": "editoradd"
 
-        },
+    },
         {
           "source_resid": "4",
           "target_resid": "5",

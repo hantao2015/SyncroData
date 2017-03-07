@@ -10,6 +10,7 @@ Public Class Form1
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Try
             CmsEnvironment.InitForClientApplication(Application.StartupPath)
+
             pst = CmsPassport.GenerateCmsPassportBySysuser()
             Dim filepath As String = "dataconfig.json"
             Dim stream As FileStream = File.OpenRead(filepath)
@@ -39,32 +40,32 @@ Public Class Form1
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        BaseService.PlatformWwwUrl = sysData.baseUrl
-        BaseService.saveMethod = sysData.saveMethod
-        BaseService.getMethod = sysData.getMethod
-        BaseService.PlatformUser = sysData.user
-        BaseService.PlatformPassword = sysData.upass
-        BaseService.PlatformApiToken = sysData.LoginToken
+        'BaseService.PlatformWwwUrl = sysData.baseUrl
+        'BaseService.saveMethod = sysData.saveMethod
+        'BaseService.getMethod = sysData.getMethod
+        'BaseService.PlatformUser = sysData.user
+        'BaseService.PlatformPassword = sysData.upass
+        'BaseService.PlatformApiToken = sysData.LoginToken
 
-        Dim bs As New BaseService()
-        Dim param As Hashtable = New Hashtable()
-        Dim listofdata As New ArrayList()
-        Dim cmscolumns As New ArrayList
-        Dim rt As PlatformResultModel
-        listofdata = bs.ShowHostTableDatas_Ajax_GetDATA(ds.Tables(0), sysData.SynDatas(0)._state, 0, 0, sysData.SynDatas(0).sourcefields, sysData.SynDatas(0).targetfields)
-        If listofdata IsNot Nothing Then
-            param.Add("resid", sysData.SynDatas(0).target_resid)
-            param.Add("data", JsonConvert.SerializeObject(listofdata))
-            param.Add("uniquecolumns", sysData.SynDatas(0).uniquecolumns)
-            param.Add("withoutdata", sysData.SynDatas(0).withoutdata)
-            Try
-                rt = bs.Post(BaseService.saveMethod2, param)
+        'Dim bs As New BaseService()
+        'Dim param As Hashtable = New Hashtable()
+        'Dim listofdata As New ArrayList()
+        'Dim cmscolumns As New ArrayList
+        'Dim rt As PlatformResultModel
+        'listofdata = BaseService.ShowHostTableDatas_Ajax_GetDATA(ds.Tables(0), sysData.SynDatas(0)._state, 0, 0, sysData.SynDatas(0).sourcefields, sysData.SynDatas(0).targetfields)
+        'If listofdata IsNot Nothing Then
+        '    param.Add("resid", sysData.SynDatas(0).target_resid)
+        '    param.Add("data", JsonConvert.SerializeObject(listofdata))
+        '    param.Add("uniquecolumns", sysData.SynDatas(0).uniquecolumns)
+        '    param.Add("withoutdata", sysData.SynDatas(0).withoutdata)
+        '    Try
+        '        rt = bs.Post(BaseService.saveMethod2, param)
 
-            Catch ex As Exception
+        '    Catch ex As Exception
 
-            End Try
+        '    End Try
 
-        End If
+        'End If
 
     End Sub
 End Class

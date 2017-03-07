@@ -1,23 +1,24 @@
-﻿Imports MiniUiAppCode.Platform
+﻿Imports System.IO
+Imports MiniUiAppCode.Platform
 Imports Newtonsoft.Json
 
 Public Class BaseService
     ' Methods
     Private Function checkLogin() As Boolean
-        Return BaseService.PlatformLogined
+        Return Me.PlatformLogined
     End Function
 
     Private Function login() As Boolean
-        BaseService.aRealsunClient = New RealsunClientNet(BaseService.PlatformWwwUrl)
-        Dim resultModel As PlatformResultModel = JsonConvert.DeserializeObject(Of PlatformResultModel)(BaseService.aRealsunClient.LoginPlatform(BaseService.PlatformUser, BaseService.PlatformPassword, BaseService.PlatformApiToken))
+        Me.aRealsunClient = New RealsunClientNet(Me.PlatformWwwUrl)
+        Dim resultModel As PlatformResultModel = JsonConvert.DeserializeObject(Of PlatformResultModel)(Me.aRealsunClient.LoginPlatform(Me.PlatformUser, Me.PlatformPassword, Me.PlatformApiToken))
         If (resultModel.Error = 0) Then
-            BaseService.LoginToken = resultModel.Token
-            BaseService.PlatformLogined = True
+            Me.LoginToken = resultModel.Token
+            Me.PlatformLogined = True
         Else
-            BaseService.LoginToken = String.Empty
-            BaseService.PlatformLogined = False
+            Me.LoginToken = String.Empty
+            Me.PlatformLogined = False
         End If
-        Return BaseService.PlatformLogined
+        Return Me.PlatformLogined
     End Function
 
     Public Function Post(ByVal method As String, ByVal param As Hashtable) As PlatformResultModel
@@ -28,10 +29,10 @@ Public Class BaseService
             Return model1
         End If
         Dim requestid As Long = 0
-        Dim str As String = BaseService.aRealsunClient.FlatformExecute(method, param, (requestid))
+        Dim str As String = Me.aRealsunClient.FlatformExecute(method, param, (requestid))
         Return JsonConvert.DeserializeObject(Of PlatformResultModel)(str)
     End Function
-    Public Function ShowHostTableDatas_Ajax_GetDATA(dt As DataTable, state As String, Optional pageindex As Long = 0, Optional pagesize As Long = 0, Optional cmscolumns As String = "", Optional targetcmscolumns As String = "") As ArrayList
+    Public Shared Function ShowHostTableDatas_Ajax_GetDATA(dt As DataTable, state As String, Optional pageindex As Long = 0, Optional pagesize As Long = 0, Optional cmscolumns As String = "", Optional targetcmscolumns As String = "") As ArrayList
         Dim result As Hashtable = New Hashtable
         Dim alist As ArrayList
         Dim alistofcolumn As New List(Of String)
@@ -89,20 +90,37 @@ Public Class BaseService
         Return data
 
     End Function
+    Public Shared Function GetSyndefine(ByVal filepath As String, ByRef errmsg As String) As SynDefine
+        Try
+
+            Dim stream As FileStream = IO.File.OpenRead(filepath)
+            Dim tr As TextReader = New StringReader((IO.File.ReadAllText(filepath)))
+
+            Dim jtr As JsonTextReader = New JsonTextReader(tr)
+
+            Dim js As JsonSerializer = New JsonSerializer()
+
+            Return js.Deserialize(Of SynDefine)(jtr)
+        Catch ex As Exception
+            errmsg = ex.Message.ToString()
+            Return Nothing
+
+        End Try
+    End Function
 
     ' Fields
-    Public Shared aRealsunClient As RealsunClientNet = Nothing
-    Public Shared deleteMethod As String = "Ajax_DeleteByColumn"
-    Public Shared getMethod As String = "ShowHostTableDatas_Ajax"
-    Public Shared LoginToken As String = String.Empty
-    Public Shared PlatformApiToken As String
-    Public Shared PlatformLogined As Boolean = False
-    Public Shared PlatformPassword As String
-    Public Shared PlatformUser As String
-    Public Shared PlatformWwwUrl As String
-    Public Shared saveMethod As String = "SaveData_Ajax"
-    Public Shared saveMethod2 As String = "ajax_SaveDataBytrans"
-    Public Shared saveMethodWithSub As String = "ajax_SaveDataWithSubTableBytrans"
+    Public Property aRealsunClient As RealsunClientNet = Nothing
+    Public Property deleteMethod As String = "Ajax_DeleteByColumn"
+    Public Property getMethod As String = "ShowHostTableDatas_Ajax"
+    Public Property LoginToken As String = String.Empty
+    Public Property PlatformApiToken As String
+    Public Property PlatformLogined As Boolean = False
+    Public Property PlatformPassword As String
+    Public Property PlatformUser As String
+    Public Property PlatformWwwUrl As String
+    Public Property saveMethod As String = "SaveData_Ajax"
+    Public Property saveMethod2 As String = "ajax_SaveDataBytrans"
+    Public Property saveMethodWithSub As String = "ajax_SaveDataWithSubTableBytrans"
 End Class
 
 
