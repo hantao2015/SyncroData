@@ -1,23 +1,26 @@
 ﻿{
 
 
-    "baseUrl": "http://kingofdinner.realsun.me:8081/rispweb/",
-    "getMethod": "ShowHostTableDatas_Ajax",
-  "saveMethod": "SaveData_Ajax",
-   "saveMethod2": "ajax_SaveDataBytrans",
-    "getBysqlMethod": "Ajax_QueryBySql",
-    "user": "demo1",
-    "upass": "kingofdinner@2017",
-    "LoginToken":"KingOfDinner123456789",
+     "baseUrl": "http://kingofdinner.realsun.me:8081/rispweb/",
+     "getMethod": "ShowHostTableDatas_Ajax",
+     "saveMethod": "SaveData_Ajax",
+     "saveMethod2": "ajax_SaveDataBytrans",
+     "getBysqlMethod": "Ajax_QueryBySql",
+     "user": "demo1",
+     "upass": "kingofdinner@2017",
+     "LoginToken":"KingOfDinner123456789",
    "SynDatas": [
     {
-       "pushurl": "http://kingofdinner.realsun.me:8081/rispweb/",
-       "pushuser": "demo1",
+      "uniquenamesynname": "人员信息同步",
+      "monitoridcolumn": "",
+      "pushurl": "http://kingofdinner.realsun.me:8081/rispweb/",
+      "pushuser": "demo1",
       "pushupass": "kingofdinner@2017",
       "fetchurl": "http://kingofdinner.realsun.me:8081/rispweb/",
-       "fetchuser": "demo1",
-       "fetchupass": "kingofdinner@2017",
+      "fetchuser": "demo1",
+      "fetchupass": "kingofdinner@2017",
       "syntype": "push",
+      "monitor_resid": "542290864273",
       "source_resid": "227186227531",
       "target_resid": "539457701388",
       "cmswhere": "C3_227192484125 like '%李%'",
@@ -27,7 +30,25 @@
       "uniquecolumns": "C3_539457726192",
       "withoutdata": "1",
       "synchronizedat": "1",
-      "_state": "editoradd"
+      "_state": "editoradd",
+      "pushtype":"web", 
+      "fetchtype": "client",
+      "pushdbc": {
+        "DATABASETYPE":0,
+        "DATABASECONTYPE": 1,
+        "HOST": "www.realsun.me\demo",
+        "PORT": 3433
+
+
+      },
+      "fetchdbc": {
+        "DATABASETYPE":0,
+        "DATABASECONTYPE": 1,
+        "HOST": "www.realsun.me\demo",
+        "PORT": 3433
+
+
+      }
 
     },
         {

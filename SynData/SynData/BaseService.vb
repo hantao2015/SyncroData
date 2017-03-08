@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports MiniUiAppCode.Platform
 Imports Newtonsoft.Json
+Imports HS.Platform
 
 Public Class BaseService
     ' Methods
@@ -75,7 +76,10 @@ Public Class BaseService
             Dim record As Hashtable = DirectCast(alist(i), Hashtable)
             record.Add("_state", state)
             record.Add("_id", i)
-            record.Remove("REC_ID")
+            If record.ContainsKey("REC_ID") Then
+                record.Remove("REC_ID")
+            End If
+
             For k As Integer = 0 To alistoftargetcolumn.Count - 1
                 record.Add(alistoftargetcolumn(k), record(alistofcolumn(k)))
                 record.Remove(alistofcolumn(k))

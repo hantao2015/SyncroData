@@ -1,4 +1,5 @@
 ﻿Imports HS.Platform
+Imports MiniUiAppCode.Platform
 Imports Newtonsoft.Json
 
 Public Class SynProcessor
@@ -38,7 +39,26 @@ Public Class SynProcessor
             errmsg = "missing field of sourcefields"
             Return False
         End If
-
+        If OneSyndata.pushtype = "" Then
+            errmsg = "missing field of pushtype"
+            Return False
+        End If
+        If OneSyndata.fetchtype = "" Then
+            errmsg = "missing field of fetchtype"
+            Return False
+        End If
+        If OneSyndata.monitoridcolumn = "" Then
+            errmsg = "missing field of monitoridcolumn"
+            Return False
+        End If
+        If OneSyndata.uniquenamesynname = "" Then
+            errmsg = "missing field of uniquenamesynname"
+            Return False
+        End If
+        If OneSyndata.monitor_resid = "" Then
+            errmsg = "missing field of monitor_resid"
+            Return False
+        End If
         If OneSyndata.targetfields = "" Then
             errmsg = "missing field of targetfields"
             Return False
@@ -60,6 +80,7 @@ Public Class SynProcessor
             errmsg = "invalid syntype"
             Return False
         End If
+
         If OneSyndata.syntype = "push" Then
             If OneSyndata.pushurl = "" Then
                 errmsg = "missing field of pushurl"
@@ -90,25 +111,73 @@ Public Class SynProcessor
         End If
         Return True
     End Function
-    Public Function GetLocalSourceData(ByRef errmesage As String) As DataSet
+    Public Function GetSourceData(ByRef errmesage As String, ByVal intIndex As Integer) As DataSet
 
         Try
-            Return CmsTable.GetDatasetForHostTable(Pst, OneSyndata.source_resid, False, OneSyndata.cmswhere, "", "")
+            Return CmsTable.GetDatasetForHostTable(Pst, OneSyndata.source_resid, False, OneSyndata.cmswhere, "", "", intIndex, OneSyndata.pagesize)
         Catch ex As Exception
             errmesage = ex.Message.ToString()
             Return Nothing
         End Try
     End Function
-    Public Function GetLocalSourceDataByPage(ByRef rows As ArrayList, ByRef errmesage As String, ByVal index As Integer) As Boolean
+    Public Function GetSourceDataByPage(ByRef rows As ArrayList, ByRef errmesage As String, ByVal index As Integer, ByRef sourcetype As String) As Boolean
+        Dim ds As DataSet
+        If sourcetype = "web" Then
+            Dim webrows As ArrayList = FetchWebSourceData(index, OneSyndata.pagesize, errmesage)
+            If errmesage <> "" Then
+                Return False
+            End If
+            Try
+                ds = DBUtil.ConvertToDataSet(Of ArrayList)(webrows)
+            Catch ex As Exception
+                ds = Nothing
+                errmesage = ex.Message.ToString()
+                Return False
+            End Try
+        Else
+            ds = GetSourceData(errmesage, index)
+        End If
 
-
-        Dim ds As DataSet = GetLocalSourceData(errmesage)
         If ds IsNot Nothing Then
+
             rows = BaseService.ShowHostTableDatas_Ajax_GetDATA(ds.Tables(0), OneSyndata._state, index, OneSyndata.pagesize, OneSyndata.sourcefields, OneSyndata.targetfields)
+
         Else
             Return False
         End If
+        errmesage = ""
         Return True
+    End Function
+    Public Function PushMonitorData2Web(ByVal uniquenamesynname As String, ByRef monitorid As String) As PlatformResultModel
+        Dim bs As New BaseService()
+        bs.PlatformWwwUrl = OneSyndata.pushurl
+        bs.PlatformUser = OneSyndata.pushuser
+        bs.PlatformPassword = OneSyndata.pushupass
+        Dim param As Hashtable = New Hashtable()
+        Dim row As Hashtable = New Hashtable()
+        Dim rows As ArrayList = New ArrayList()
+        row.Add("_state", "added")
+        row.Add("_id", "1")
+        row.Add("uniquenamesynname", uniquenamesynname)
+        rows.Add(row)
+        param.Add("resid", OneSyndata.monitor_resid)
+        param.Add("data", JsonConvert.SerializeObject(rows))
+
+
+        Dim rt As PlatformResultModel = New PlatformResultModel()
+        Try
+            rt = bs.Post(bs.saveMethod2, param)
+            If rt.Error = 0 Then
+                monitorid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
+            Else
+                monitorid = 0
+            End If
+        Catch ex As Exception
+            rt.Error = -1
+            rt.Message = ex.Message.ToString()
+        End Try
+        Return rt
+
     End Function
     Public Function PushData2Web(ByVal rows As ArrayList) As PlatformResultModel
         Dim bs As New BaseService()
@@ -131,14 +200,35 @@ Public Class SynProcessor
         Return rt
 
     End Function
-
-    Public Function GetWebSourceData(ByVal intIndex As Integer, ByVal intSize As Integer, ByRef errmsg As String) As ArrayList
-
-
+    Public Function PushData2Client(ByVal rows As ArrayList) As PlatformResultModel
         Dim bs As New BaseService()
         bs.PlatformWwwUrl = OneSyndata.pushurl
         bs.PlatformUser = OneSyndata.pushuser
         bs.PlatformPassword = OneSyndata.pushupass
+        Dim param As Hashtable = New Hashtable()
+        param.Add("resid", OneSyndata.target_resid)
+        param.Add("data", JsonConvert.SerializeObject(rows))
+        param.Add("uniquecolumns", OneSyndata.uniquecolumns)
+        param.Add("withoutdata", OneSyndata.withoutdata)
+        Dim rt As PlatformResultModel = New PlatformResultModel()
+        Try
+            rt = bs.Post(bs.saveMethod2, param)
+
+        Catch ex As Exception
+            rt.Error = -1
+            rt.Message = ex.Message.ToString()
+        End Try
+        Return rt
+
+    End Function
+
+    Public Function FetchWebSourceData(ByVal intIndex As Integer, ByVal intSize As Integer, ByRef errmsg As String) As ArrayList
+
+
+        Dim bs As New BaseService()
+        bs.PlatformWwwUrl = OneSyndata.fetchurl
+        bs.PlatformUser = OneSyndata.fetchuser
+        bs.PlatformPassword = OneSyndata.fetchupass
         Dim param As Hashtable = New Hashtable()
         Dim listofdata As New ArrayList()
         Dim cmscolumns As New ArrayList
@@ -153,6 +243,7 @@ Public Class SynProcessor
             rt = bs.Post(bs.getMethod, param)
             If (rt.Error = 0) Then
                 rows = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())
+                errmsg = ""
             Else
                 errmsg = rt.Message
             End If
@@ -162,10 +253,12 @@ Public Class SynProcessor
         Return rows
 
     End Function
-    Public Function GetWebSourceDataCount(ByRef errmsg As String) As Long
-
+    Public Function FetchWebSourceDataCount(ByRef errmsg As String) As Long
         Dim total As Long = 0
-
+        Return total
+    End Function
+    Public Function FetchSourceDataCount(ByRef errmsg As String) As Long
+        Dim total As Long = 0
         Return total
     End Function
 End Class

@@ -1,4 +1,6 @@
-﻿Public Class OneSynDefine
+﻿Imports HS.Platform
+
+Public Class OneSynDefine
     Public source_resid As String
     Public target_resid As String
     Public cmswhere As String
@@ -8,6 +10,9 @@
     Public uniquecolumns As String
     Public withoutdata As String = "1"
     Public synchronizedat As String = "1"
+    Public monitor_resid As String = ""
+    Public uniquenamesynname As String = ""
+
     Public pushurl As String
     Public pushuser As String
     Public pushupass As String
@@ -16,4 +21,9 @@
     Public Property fetchuser As String
     Public Property fetchurl As String
     Public Property syntype As Boolean
+    Public Property monitoridcolumn As String
+    Public Property pushdbc As DbConfig
+    Public Property fetchdbc As DbConfig
+    Public Property pushtype As String
+    Public Property fetchtype As String
 End Class
