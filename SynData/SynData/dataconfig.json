@@ -11,18 +11,19 @@
      "LoginToken":"KingOfDinner123456789",
    "SynDatas": [
     {
-      "uniquenamesynname": "人员信息同步",
-      "monitoridcolumn": "",
+      "uniquenameofsynname": "人员信息同步",
+      "monitoridcolumn": "uniquenamesynname",
       "pushurl": "http://kingofdinner.realsun.me:8081/rispweb/",
       "pushuser": "demo1",
       "pushupass": "kingofdinner@2017",
       "fetchurl": "http://kingofdinner.realsun.me:8081/rispweb/",
       "fetchuser": "demo1",
       "fetchupass": "kingofdinner@2017",
-      "syntype": "push",
+   
       "monitor_resid": "542290864273",
       "source_resid": "227186227531",
       "target_resid": "539457701388",
+      "target_synmonitorcolumnofid":"C3_542374415384", 
       "cmswhere": "C3_227192484125 like '%李%'",
       "sourcefields": "C3_227192472953,C3_227192484125",
       "targetfields": "C3_539457726192,C3_539457741668",

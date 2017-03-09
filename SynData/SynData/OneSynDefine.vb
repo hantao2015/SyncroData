@@ -11,8 +11,8 @@ Public Class OneSynDefine
     Public withoutdata As String = "1"
     Public synchronizedat As String = "1"
     Public monitor_resid As String = ""
-    Public uniquenamesynname As String = ""
-
+    Public uniquenameofsynname As String = ""
+    Public target_synmonitorcolumnofid As String = ""
     Public pushurl As String
     Public pushuser As String
     Public pushupass As String
@@ -20,7 +20,7 @@ Public Class OneSynDefine
     Public Property fetchupass As String
     Public Property fetchuser As String
     Public Property fetchurl As String
-    Public Property syntype As Boolean
+
     Public Property monitoridcolumn As String
     Public Property pushdbc As DbConfig
     Public Property fetchdbc As DbConfig
