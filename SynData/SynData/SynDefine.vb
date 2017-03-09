@@ -19,4 +19,5 @@ Public Class SynDefine
     Property upass As String
     Property SynDatas As List(Of OneSynDefine)
     Property LoginToken As String
+
 End Class

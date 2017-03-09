@@ -26,4 +26,5 @@ Public Class OneSynDefine
     Public Property fetchdbc As DbConfig
     Public Property pushtype As String
     Public Property fetchtype As String
+    Property Active As String
 End Class

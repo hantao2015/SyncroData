@@ -11,7 +11,8 @@
      "LoginToken":"KingOfDinner123456789",
    "SynDatas": [
     {
-      "uniquenameofsynname": "人员信息同步",
+      "Active": "Y",
+      "uniquenameofsynname": "人员信息同步1",
       "monitoridcolumn": "uniquenamesynname",
       "pushurl": "http://kingofdinner.realsun.me:8081/rispweb/",
       "pushuser": "demo1",
@@ -19,12 +20,12 @@
       "fetchurl": "http://kingofdinner.realsun.me:8081/rispweb/",
       "fetchuser": "demo1",
       "fetchupass": "kingofdinner@2017",
-   
+
       "monitor_resid": "542290864273",
       "source_resid": "227186227531",
       "target_resid": "539457701388",
-      "target_synmonitorcolumnofid":"C3_542374415384", 
-      "cmswhere": "C3_227192484125 like '%李%'",
+      "target_synmonitorcolumnofid": "C3_542374415384",
+      "cmswhere": "",
       "sourcefields": "C3_227192472953,C3_227192484125",
       "targetfields": "C3_539457726192,C3_539457741668",
       "pagesize": 100,
@@ -32,31 +33,88 @@
       "withoutdata": "1",
       "synchronizedat": "1",
       "_state": "editoradd",
-      "pushtype":"web", 
+      "pushtype": "web",
       "fetchtype": "client",
       "pushdbc": {
-        "DATABASETYPE":0,
+        "DATABASETYPE": 1,
         "DATABASECONTYPE": 1,
-        "HOST": "www.realsun.me\demo",
-        "PORT": 3433
+        "HsopDbConType": 1,
+        "HOST": "www.realsun.me\\demo",
+        "PORT": 3433,
+        "User": "cmsuser",
+        "Database": "demo1",
+        "Pass": "cmsuserpass123"
 
 
       },
       "fetchdbc": {
-        "DATABASETYPE":0,
+        "DATABASETYPE": 1,
         "DATABASECONTYPE": 1,
-        "HOST": "www.realsun.me\demo",
-        "PORT": 3433
+        "HsopDbConType": 1,
+        "HOST": "www.realsun.me\\demo",
+        "PORT": 3433,
+        "User": "cmsuser",
+        "Database": "demo1",
+        "Pass": "cmsuserpass123"
+
 
 
       }
 
     },
-        {
-          "source_resid": "4",
-          "target_resid": "5",
-          "cmswhere": "6"
-        }
+      {
+      "Active": "Y",
+      "uniquenameofsynname": "人员信息同步2",
+      "monitoridcolumn": "uniquenamesynname",
+      "pushurl": "http://kingofdinner.realsun.me:8081/rispweb/",
+      "pushuser": "demo1",
+      "pushupass": "kingofdinner@2017",
+      "fetchurl": "http://www.realsun.me:8003/rispweb/",
+      "fetchuser": "demo1",
+      "fetchupass": "",
+
+      "monitor_resid": "542290864273",
+      "source_resid": "227186227531",
+      "target_resid": "539457701388",
+      "target_synmonitorcolumnofid": "C3_542374415384",
+      "cmswhere": "",
+      "sourcefields": "C3_227192472953,C3_227192484125",
+      "targetfields": "C3_539457726192,C3_539457741668",
+      "pagesize": 100,
+      "uniquecolumns": "C3_539457726192",
+      "withoutdata": "1",
+      "synchronizedat": "1",
+      "_state": "editoradd",
+      "pushtype": "web",
+      "fetchtype": "web",
+      "pushdbc": {
+        "DATABASETYPE": 1,
+        "DATABASECONTYPE": 1,
+        "HsopDbConType": 1,
+        "HOST": "www.realsun.me\\demo",
+        "PORT": 3433,
+        "User": "cmsuser",
+        "Database": "demo1",
+        "Pass": "cmsuserpass123"
+
+
+      },
+      "fetchdbc": {
+        "DATABASETYPE": 1,
+        "DATABASECONTYPE": 1,
+        "HsopDbConType": 1,
+        "HOST": "www.realsun.me\\demo",
+        "PORT": 3433,
+        "User": "cmsuser",
+        "Database": "demo1",
+        "Pass": "cmsuserpass123"
+
+
+
+      }
+
+    }
+        
 
       ]
   

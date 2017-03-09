@@ -6,6 +6,9 @@ Public Class SynProcessor
     Private m_pst As CmsPassport
     Private m_syndata As OneSynDefine
     Private listofhash2Save As List(Of Hashtable)
+    Public Property SyncroRows As Long = 0
+    Public Property intTotal As Long = 0
+
 
     Public Property Pst As CmsPassport
         Get
@@ -30,6 +33,7 @@ Public Class SynProcessor
         Dim errmsg As String = ""
         m_pst = pst
         m_syndata = syndata
+        pst = CmsPassport.GenerateCmsPassportBySysuser()
         If Not CheckSyndata(errmsg) Then
             Throw New Exception(errmsg)
         End If
@@ -88,33 +92,35 @@ Public Class SynProcessor
         Try
             Pst.Dbc = OneSyndata.fetchdbc
 
-            Return CmsTable.GetDatasetForHostTable(Pst, OneSyndata.source_resid, False, OneSyndata.cmswhere, "", "", intIndex, OneSyndata.pagesize)
+            Return CmsTable.GetDatasetForHostTable(Pst, OneSyndata.source_resid, False, OneSyndata.cmswhere, "", "", intIndex * OneSyndata.pagesize, OneSyndata.pagesize)
         Catch ex As Exception
             errmesage = ex.Message.ToString()
             Return Nothing
         End Try
     End Function
-    Public Function GetSourceDataByPage(ByRef rows As ArrayList, ByRef errmesage As String, ByVal index As Integer) As Boolean
+    Public Function GetSourceDataByPage(ByRef rows As ArrayList, ByRef errmesage As String, ByVal index As Integer, ByVal monitorbatchid As Long) As Boolean
         Dim ds As DataSet
+        Dim dt As DataTable = Nothing
+
         If OneSyndata.fetchtype = "web" Then
-            Dim webrows As ArrayList = FetchWebSourceData(index, OneSyndata.pagesize, errmesage)
+            Dim webrows As List(Of Hashtable) = FetchWebSourceData(index, OneSyndata.pagesize, errmesage)
             If errmesage <> "" Then
                 Return False
             End If
             Try
-                ds = DBUtil.ConvertToDataSet(Of ArrayList)(webrows)
+                dt = DBUtil.Convert2DataTable(webrows)
             Catch ex As Exception
                 ds = Nothing
                 errmesage = ex.Message.ToString()
                 Return False
             End Try
         Else
-            ds = GetSourceData(errmesage, index)
+            dt = GetSourceData(errmesage, index).Tables(0)
         End If
 
-        If ds IsNot Nothing Then
+        If dt IsNot Nothing Then
 
-            rows = BaseService.ShowHostTableDatas_Ajax_GetDATA(ds.Tables(0), OneSyndata._state, index, OneSyndata.pagesize, OneSyndata.sourcefields, OneSyndata.targetfields)
+            rows = BaseService.ShowHostTableDatas_Ajax_GetDATA(dt, OneSyndata._state, OneSyndata.target_synmonitorcolumnofid, Convert.ToString(monitorbatchid), OneSyndata.sourcefields, OneSyndata.targetfields)
 
         Else
             Return False
@@ -203,7 +209,7 @@ Public Class SynProcessor
 
     End Function
 
-    Public Function FetchWebSourceData(ByVal intIndex As Integer, ByVal intSize As Integer, ByRef errmsg As String) As ArrayList
+    Public Function FetchWebSourceData(ByVal intIndex As Integer, ByVal intSize As Integer, ByRef errmsg As String) As List(Of Hashtable)
 
 
         Dim bs As New BaseService()
@@ -213,17 +219,18 @@ Public Class SynProcessor
         Dim param As Hashtable = New Hashtable()
         Dim listofdata As New ArrayList()
         Dim cmscolumns As New ArrayList
-        Dim rows As ArrayList = New ArrayList
+        Dim rows As New List(Of Hashtable)
 
         param.Add("resid", OneSyndata.source_resid)
         param.Add("cmswhere", OneSyndata.cmswhere)
         param.Add("pagesize", intSize)
         param.Add("pageindex", intIndex)
+        param.Add("cmscolumns", OneSyndata.sourcefields)
         Dim rt As PlatformResultModel = New PlatformResultModel()
         Try
             rt = bs.Post(bs.getMethod, param)
             If (rt.Error = 0) Then
-                rows = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())
+                rows = JsonConvert.DeserializeObject(Of List(Of Hashtable))(rt.Data.ToString())
                 errmsg = ""
             Else
                 errmsg = rt.Message
@@ -260,7 +267,9 @@ Public Class SynProcessor
 
     Public Function getClientSourceDataCount(ByRef errmsg As String, ByVal dbc As DbConfig, ByVal resid As Long, ByVal cmswhere As String) As Long
         Dim total As Long = 0
-        Return total
+
+
+
         Pst.Dbc = dbc
         Return CmsTable.CountByWhere(Pst, resid, "REC_ID", cmswhere)
     End Function
@@ -273,13 +282,26 @@ Public Class SynProcessor
 
         End If
     End Function
+    Public Sub DealSynThread()
+        Try
+
+            If (OneSyndata.Active = "Y") Then
+                SLog.Crucial("开始同步:" + OneSyndata.uniquenameofsynname)
+                DealSyn()
+                SLog.Crucial("同步结束:" + OneSyndata.uniquenameofsynname + "，源记录数:" + intTotal.ToString() + "，已同步的记录数:" + SyncroRows.ToString())
+            End If
+        Catch ex As Exception
+            SLog.Err("处理同步失败-" + OneSyndata.uniquenameofsynname + ex.Message)
+        End Try
+
+    End Sub
     Public Sub DealSyn()
         Dim param As Hashtable = New Hashtable()
         Dim row As New Hashtable
         Dim rows As New ArrayList
         Dim monitorbatchid As Long
         Dim strErrorMessage As String = ""
-        Dim intTotal As Long = 0
+
         Dim intPagecount As Long = 0
         Dim intIndex As Long = 0
         param.Add("resid", OneSyndata.monitor_resid)
@@ -288,27 +310,36 @@ Public Class SynProcessor
         row.Add("_state", "added")
         rows.Add(row)
         param.Add("data", JsonConvert.SerializeObject(rows))
+        '生成同步监控记录
+        '同步监控记录编号
         If OneSyndata.pushtype = "web" Then
             Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
             If rt.Error = 0 Then
                 monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
+            Else
+                SLog.Err("web 添加监控记录失败:" + rt.Message)
             End If
         Else
 
             Dim listofdataReturn As New List(Of Hashtable)
 
-            SaveData2Client(rows, OneSyndata.pushdbc, strErrorMessage, listofdataReturn)
-            Dim record As Hashtable = DirectCast(listofdataReturn.Item(0), Hashtable)
-            monitorbatchid = Convert.ToInt64(record("REC_ID"))
+            If SaveData2Client(rows, OneSyndata.pushdbc, strErrorMessage, listofdataReturn) Then
+                Dim record As Hashtable = DirectCast(listofdataReturn.Item(0), Hashtable)
+                monitorbatchid = Convert.ToInt64(record("REC_ID"))
+            Else
+                SLog.Err("client 添加监控记录失败:" + strErrorMessage)
+
+            End If
+
         End If
-        '生成同步监控记录
-        '同步监控记录编号
+
 
         If monitorbatchid > 0 Then
             '先fetch rowscount ,根据pagesize分页获取rows
             intTotal = getDataCount(strErrorMessage, OneSyndata.fetchdbc, OneSyndata.source_resid, OneSyndata.cmswhere, OneSyndata.fetchtype, OneSyndata.fetchurl, OneSyndata.fetchuser, OneSyndata.fetchupass)
             If strErrorMessage <> "" Then
                 SLog.Err(strErrorMessage)
+                Return
             End If
             If intTotal > 0 Then
                 intPagecount = intTotal / OneSyndata.pagesize
@@ -316,15 +347,21 @@ Public Class SynProcessor
                     '根据pagesize分页获取rows
                     Dim aRows As New ArrayList
                     Dim strErr As String = ""
-                    If GetSourceDataByPage(aRows, strErrorMessage, i) Then
+                    If GetSourceDataByPage(aRows, strErrorMessage, i, monitorbatchid) Then
                         If Not PushData(aRows, strErrorMessage) Then
                             If strErrorMessage <> "" Then
                                 SLog.Err(strErrorMessage)
+                                Exit For
                             End If
+                        Else
+
+                            SyncroRows = SyncroRows + aRows.Count
+                            SLog.Info("同步任务:" + OneSyndata.uniquenameofsynname + ",当前同步完成记录数:" + SyncroRows.ToString())
                         End If
                     Else
                         If strErrorMessage <> "" Then
                             SLog.Err(strErrorMessage)
+                            Exit For
                         End If
                     End If
 

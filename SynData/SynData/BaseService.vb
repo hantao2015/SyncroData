@@ -33,13 +33,13 @@ Public Class BaseService
         Dim str As String = Me.aRealsunClient.FlatformExecute(method, param, (requestid))
         Return JsonConvert.DeserializeObject(Of PlatformResultModel)(str)
     End Function
-    Public Shared Function ShowHostTableDatas_Ajax_GetDATA(dt As DataTable, state As String, Optional pageindex As Long = 0, Optional pagesize As Long = 0, Optional cmscolumns As String = "", Optional targetcmscolumns As String = "") As ArrayList
+    Public Shared Function ShowHostTableDatas_Ajax_GetDATA(ByVal dt As DataTable, ByVal state As String, ByVal target_synmonitorcolumnofid As String, ByVal synmonitorid As String, Optional sourcecmscolumns As String = "", Optional targetcmscolumns As String = "") As ArrayList
         Dim result As Hashtable = New Hashtable
         Dim alist As ArrayList
         Dim alistofcolumn As New List(Of String)
         Dim alistoftargetcolumn As New List(Of String)
-        If cmscolumns <> "" Then
-            Dim strColumns As String() = cmscolumns.Split(",")
+        If sourcecmscolumns <> "" Then
+            Dim strColumns As String() = sourcecmscolumns.Split(",")
             Dim strTargetColumns As String() = targetcmscolumns.Split(",")
 
             For Each str As String In strTargetColumns
@@ -66,12 +66,7 @@ Public Class BaseService
 
         Dim data As ArrayList = New ArrayList()
 
-        Dim start As Integer = pageindex * pagesize ' index * size
 
-        Dim ends As Integer = start + pagesize
-        If pagesize = 0 Then
-            ends = dt.Rows.Count
-        End If
         For i As Integer = 0 To alist.Count - 1
             Dim record As Hashtable = DirectCast(alist(i), Hashtable)
             record.Add("_state", state)
@@ -84,12 +79,13 @@ Public Class BaseService
                 record.Add(alistoftargetcolumn(k), record(alistofcolumn(k)))
                 record.Remove(alistofcolumn(k))
             Next
+            record.Add(target_synmonitorcolumnofid, synmonitorid)
             If record Is Nothing Then
                 Continue For
             End If
-            If start <= i And i < ends Then
-                data.Add(record)
-            End If
+
+            data.Add(record)
+
         Next
         Return data
 
@@ -117,7 +113,7 @@ Public Class BaseService
     Public Property deleteMethod As String = "Ajax_DeleteByColumn"
     Public Property getMethod As String = "ShowHostTableDatas_Ajax"
     Public Property LoginToken As String = String.Empty
-    Public Property PlatformApiToken As String
+    Public Property PlatformApiToken As String = "KingOfDinner123456789"
     Public Property PlatformLogined As Boolean = False
     Public Property PlatformPassword As String
     Public Property PlatformUser As String
