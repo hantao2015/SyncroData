@@ -11,6 +11,12 @@ Public Class OneSynDefine
     Public withoutdata As String = "1"
     Public synchronizedat As String = "1"
     Public monitor_resid As String = ""
+    Public monitor_colofendtime As String = ""
+    Public monitor_colofrecords As String = ""
+    Public monitorlog_resid As String = ""
+    Public monitorlog_colofbatchid As String = ""
+    Public monitorlog_coloftime As String = ""
+    Public monitorlog_colofcontent As String = ""
     Public uniquenameofsynname As String = ""
     Public target_synmonitorcolumnofid As String = ""
     Public pushurl As String
@@ -27,4 +33,5 @@ Public Class OneSynDefine
     Public Property pushtype As String
     Public Property fetchtype As String
     Property Active As String
+    Property bytransvalue As String = "1"
 End Class

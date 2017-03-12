@@ -5,9 +5,10 @@ Imports Newtonsoft.Json
 Public Class SynProcessor
     Private m_pst As CmsPassport
     Private m_syndata As OneSynDefine
-    Private listofhash2Save As List(Of Hashtable)
+    Private listofhash2Save As New List(Of Hashtable)
     Public Property SyncroRows As Long = 0
     Public Property intTotal As Long = 0
+    Public Property monitorbatchid As Long = 0
 
 
     Public Property Pst As CmsPassport
@@ -40,6 +41,30 @@ Public Class SynProcessor
 
     End Sub
     Public Function CheckSyndata(ByRef errmsg As String) As Boolean
+        If OneSyndata.monitor_colofrecords = "" Then
+            errmsg = "missing field of monitor_colofrecords"
+            Return False
+        End If
+        If OneSyndata.monitor_colofendtime = "" Then
+            errmsg = "missing field of monitor_colofendtime"
+            Return False
+        End If
+        If OneSyndata.monitorlog_colofbatchid = "" Then
+            errmsg = "missing field of monitorlog_colofbatchid"
+            Return False
+        End If
+        If OneSyndata.monitorlog_resid = "" Then
+            errmsg = "missing field of monitorlog_resid"
+            Return False
+        End If
+        If OneSyndata.monitorlog_coloftime = "" Then
+            errmsg = "missing field of monitorlog_coloftime"
+            Return False
+        End If
+        If OneSyndata.monitorlog_colofcontent = "" Then
+            errmsg = "missing field of monitorlog_colofcontent"
+            Return False
+        End If
         If OneSyndata.sourcefields = "" Then
             errmsg = "missing field of sourcefields"
             Return False
@@ -140,32 +165,33 @@ Public Class SynProcessor
 
         Catch ex As Exception
             rt.Error = -1
-            rt.Message = ex.Message.ToString()
+            rt.Message = ex.Message.ToString() + ex.InnerException.Source.ToString()
         End Try
         Return rt
     End Function
     Public Function SaveData2Client(ByVal rows As ArrayList, ByVal dbc As DbConfig, ByRef strErrorMessage As String, ByRef listofdataReturn As List(Of Hashtable)) As Boolean
         Pst.Dbc = dbc
         Dim dbs As DbStatement = New DbStatement(dbc)
-
+        Dim strRightsErrorMessage As String = ""
         Try
             dbs.TransactionBegin()
-            Dim alistofRowstate As ArrayList = Nothing
+            Dim alistofRowstate As New ArrayList
 
-            Dim rp As CmsTableParam = Nothing
+            Dim rp As New CmsTableParam
 
-            Dim strRightsErrorMessage As String = Nothing
 
-            If CmsTable.SaveDataBytran(Pst, dbs, OneSyndata.target_resid, rows, OneSyndata.uniquecolumns, alistofRowstate, listofdataReturn, listofhash2Save, strRightsErrorMessage, strErrorMessage) = False Then
+
+            If CmsTable.SaveDataBytran(Pst, dbs, OneSyndata.target_resid, rows, OneSyndata.uniquecolumns, alistofRowstate, listofdataReturn, listofhash2Save, strRightsErrorMessage, strErrorMessage, "", "", "", rp, False) = False Then
                 dbs.TransactionRollback()
             End If
 
 
         Catch ex As Exception
             dbs.TransactionRollback()
-            strErrorMessage = ex.Message.ToString()
+            strErrorMessage = ex.Message.ToString() + "/strRightsErrorMessage=" + strRightsErrorMessage
             Return False
         End Try
+        dbs.TransactionCommit()
 
         Return True
 
@@ -195,18 +221,15 @@ Public Class SynProcessor
         param.Add("data", JsonConvert.SerializeObject(rows))
         param.Add("uniquecolumns", OneSyndata.uniquecolumns)
         param.Add("withoutdata", OneSyndata.withoutdata)
+        param.Add("bytransvalue", OneSyndata.bytransvalue)
         Return SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
 
     End Function
     Public Function PushData2Client(ByVal rows As ArrayList, ByRef strErrorMessage As String) As Boolean
         Pst.Dbc = OneSyndata.pushdbc
-        Dim alistofRowstate As ArrayList = Nothing
 
-        Dim listofdataReturn As List(Of Hashtable) = Nothing
-
+        Dim listofdataReturn As New List(Of Hashtable)
         Return SaveData2Client(rows, OneSyndata.pushdbc, strErrorMessage, listofdataReturn)
-
-
     End Function
 
     Public Function FetchWebSourceData(ByVal intIndex As Integer, ByVal intSize As Integer, ByRef errmsg As String) As List(Of Hashtable)
@@ -286,58 +309,169 @@ Public Class SynProcessor
         Try
 
             If (OneSyndata.Active = "Y") Then
+                Dim batchid As Long = TimeId.CurrentMillisecondsThreadSafe()
                 SLog.Crucial("开始同步:" + OneSyndata.uniquenameofsynname)
+                StartMonitor()
+                MonitorLog("开始同步:" + OneSyndata.uniquenameofsynname)
                 DealSyn()
                 SLog.Crucial("同步结束:" + OneSyndata.uniquenameofsynname + "，源记录数:" + intTotal.ToString() + "，已同步的记录数:" + SyncroRows.ToString())
+                MonitorLog("同步结束:" + OneSyndata.uniquenameofsynname + "，源记录数:" + intTotal.ToString() + "，已同步的记录数:" + SyncroRows.ToString())
+                EndMonitor()
             End If
         Catch ex As Exception
             SLog.Err("处理同步失败-" + OneSyndata.uniquenameofsynname + ex.Message)
+            MonitorLog("处理同步失败-" + OneSyndata.uniquenameofsynname + ex.Message)
         End Try
 
     End Sub
-    Public Sub DealSyn()
+    Public Sub MonitorLog(ByVal content As String)
         Dim param As Hashtable = New Hashtable()
         Dim row As New Hashtable
         Dim rows As New ArrayList
-        Dim monitorbatchid As Long
         Dim strErrorMessage As String = ""
-
         Dim intPagecount As Long = 0
         Dim intIndex As Long = 0
-        param.Add("resid", OneSyndata.monitor_resid)
-        row.Add(OneSyndata.monitoridcolumn, OneSyndata.uniquenameofsynname)
+
+        param.Add("resid", OneSyndata.monitorlog_resid)
+        row.Add(OneSyndata.monitorlog_colofbatchid, monitorbatchid)
+        row.Add(OneSyndata.monitorlog_colofcontent, content)
+        row.Add(OneSyndata.monitorlog_coloftime, DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"))
         row.Add("_id", 1)
         row.Add("_state", "added")
         rows.Add(row)
         param.Add("data", JsonConvert.SerializeObject(rows))
-        '生成同步监控记录
-        '同步监控记录编号
+        If OneSyndata.pushtype = "web" Then
+            Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
+            If rt.Error = 0 Then
+
+            Else
+                SLog.Err("web 添加监控日志记录失败:" + rt.Message)
+            End If
+        Else
+
+            Dim listofdataReturn As New List(Of Hashtable)
+            Pst.Dbc = OneSyndata.pushdbc
+            Try
+                CmsTable.AddRecord(Pst, OneSyndata.monitorlog_resid, row)
+            Catch ex As Exception
+                SLog.Err("client 添加监控日志记录失败:" + ex.Message.ToString())
+            End Try
+
+            'If SaveData2Client(rows, OneSyndata.pushdbc, strErrorMessage, listofdataReturn) Then
+
+
+            'Else
+            '    SLog.Err("client 添加监控日志记录失败:" + strErrorMessage)
+
+            'End If
+
+        End If
+    End Sub
+    Public Sub EndMonitor()
+        Dim param As Hashtable = New Hashtable()
+        Dim row As New Hashtable
+        Dim rows As New ArrayList
+        Dim strErrorMessage As String = ""
+        Dim intPagecount As Long = 0
+        Dim intIndex As Long = 0
+        param.Add("resid", OneSyndata.monitor_resid)
+        row.Add("REC_ID", monitorbatchid)
+        row.Add(OneSyndata.monitor_colofendtime, DateTime.Now.ToString("yyyy-MM-dd hh:mm"))
+        row.Add(OneSyndata.monitor_colofrecords, intTotal)
+        row.Add("_id", 1)
+        row.Add("_state", "modified")
+        rows.Add(row)
+        param.Add("data", JsonConvert.SerializeObject(rows))
         If OneSyndata.pushtype = "web" Then
             Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
             If rt.Error = 0 Then
                 monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
             Else
                 SLog.Err("web 添加监控记录失败:" + rt.Message)
+                MonitorLog("web 添加监控记录失败:")
             End If
         Else
 
             Dim listofdataReturn As New List(Of Hashtable)
+            Pst.Dbc = OneSyndata.pushdbc
+            Try
+                Dim cr As CmsTableReturn = CmsTable.EditRecord(Pst, OneSyndata.monitor_resid, Convert.ToInt64(monitorbatchid), row)
 
-            If SaveData2Client(rows, OneSyndata.pushdbc, strErrorMessage, listofdataReturn) Then
-                Dim record As Hashtable = DirectCast(listofdataReturn.Item(0), Hashtable)
-                monitorbatchid = Convert.ToInt64(record("REC_ID"))
-            Else
-                SLog.Err("client 添加监控记录失败:" + strErrorMessage)
+            Catch ex As Exception
 
-            End If
+                SLog.Err("client 添加监控记录失败:" + ex.Message.ToString)
+                MonitorLog("client 添加监控记录失败:" + ex.Message.ToString)
+            End Try
+            'If SaveData2Client(rows, OneSyndata.pushdbc, strErrorMessage, listofdataReturn) Then
+            '    Dim record As Hashtable = DirectCast(listofdataReturn.Item(0), Hashtable)
+            '    monitorbatchid = Convert.ToInt64(record("REC_ID"))
+            'Else
+
+            '    SLog.Err("client 添加监控记录失败:" + strErrorMessage)
+            '    MonitorLog("client 添加监控记录失败:" + strErrorMessage)
+            'End If
 
         End If
+
+
+    End Sub
+    Public Sub StartMonitor()
+        Dim param As Hashtable = New Hashtable()
+        Dim row As New Hashtable
+        Dim rows As New ArrayList
+        Dim strErrorMessage As String = ""
+        Dim intPagecount As Long = 0
+        Dim intIndex As Long = 0
+        param.Add("resid", OneSyndata.monitor_resid)
+        row.Add(OneSyndata.monitoridcolumn, OneSyndata.uniquenameofsynname)
+
+        row.Add("_id", 1)
+        row.Add("_state", "added")
+        rows.Add(row)
+        param.Add("data", JsonConvert.SerializeObject(rows))
+        If OneSyndata.pushtype = "web" Then
+            Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
+            If rt.Error = 0 Then
+                monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
+            Else
+                SLog.Err("web 添加监控记录失败:" + rt.Message)
+                MonitorLog("web 添加监控记录失败:")
+            End If
+        Else
+
+            Dim listofdataReturn As New List(Of Hashtable)
+            Try
+                Pst.Dbc = OneSyndata.pushdbc
+                Dim cr As CmsTableReturn = CmsTable.AddRecord(Pst, OneSyndata.monitor_resid, row)
+                monitorbatchid = cr.RecID
+            Catch ex As Exception
+                SLog.Err("client 添加监控记录失败:" + ex.Message.ToString())
+                MonitorLog("client 添加监控记录失败:" + ex.Message.ToString())
+            End Try
+            'If SaveData2Client(rows, OneSyndata.pushdbc, strErrorMessage, listofdataReturn) Then
+            '    Dim record As Hashtable = DirectCast(listofdataReturn.Item(0), Hashtable)
+            '    monitorbatchid = Convert.ToInt64(record("REC_ID"))
+            'Else
+
+            '    SLog.Err("client 添加监控记录失败:" + strErrorMessage)
+            '    MonitorLog("client 添加监控记录失败:" + strErrorMessage)
+            'End If
+
+        End If
+
+
+    End Sub
+    Public Sub DealSyn()
+        Dim strErrorMessage As String = ""
+        Dim intPagecount As Long = 0
+        Dim intIndex As Long = 0
 
 
         If monitorbatchid > 0 Then
             '先fetch rowscount ,根据pagesize分页获取rows
             intTotal = getDataCount(strErrorMessage, OneSyndata.fetchdbc, OneSyndata.source_resid, OneSyndata.cmswhere, OneSyndata.fetchtype, OneSyndata.fetchurl, OneSyndata.fetchuser, OneSyndata.fetchupass)
             If strErrorMessage <> "" Then
+                MonitorLog(strErrorMessage)
                 SLog.Err(strErrorMessage)
                 Return
             End If
@@ -351,16 +485,19 @@ Public Class SynProcessor
                         If Not PushData(aRows, strErrorMessage) Then
                             If strErrorMessage <> "" Then
                                 SLog.Err(strErrorMessage)
+                                MonitorLog(strErrorMessage)
                                 Exit For
                             End If
                         Else
 
                             SyncroRows = SyncroRows + aRows.Count
-                            SLog.Info("同步任务:" + OneSyndata.uniquenameofsynname + ",当前同步完成记录数:" + SyncroRows.ToString())
+                            SLog.Crucial("同步任务:" + OneSyndata.uniquenameofsynname + ",当前同步完成记录数:" + SyncroRows.ToString())
+                            MonitorLog("同步任务:" + OneSyndata.uniquenameofsynname + ",当前同步完成记录数:" + SyncroRows.ToString())
                         End If
                     Else
                         If strErrorMessage <> "" Then
                             SLog.Err(strErrorMessage)
+                            MonitorLog(strErrorMessage)
                             Exit For
                         End If
                     End If
