@@ -24,6 +24,7 @@ Partial Class Form1
     Private Sub InitializeComponent()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
+        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.SuspendLayout()
         '
         'Button1
@@ -44,11 +45,20 @@ Partial Class Form1
         Me.Button2.Text = "startsyn"
         Me.Button2.UseVisualStyleBackColor = True
         '
+        'RichTextBox1
+        '
+        Me.RichTextBox1.Location = New System.Drawing.Point(161, 12)
+        Me.RichTextBox1.Name = "RichTextBox1"
+        Me.RichTextBox1.Size = New System.Drawing.Size(1082, 469)
+        Me.RichTextBox1.TabIndex = 2
+        Me.RichTextBox1.Text = ""
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(670, 261)
+        Me.ClientSize = New System.Drawing.Size(1249, 493)
+        Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
         Me.Name = "Form1"
@@ -59,4 +69,5 @@ Partial Class Form1
 
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
+    Friend WithEvents RichTextBox1 As RichTextBox
 End Class

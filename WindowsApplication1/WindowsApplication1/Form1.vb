@@ -7,6 +7,9 @@ Imports SynData
 Public Class Form1
     Public pst As CmsPassport
     Dim sysData As SynDefine
+    Public Delegate Sub setText(ByVal msg As String)
+    Public setTextHandler As setText = New setText(AddressOf Me.setRichTextBox)
+
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Try
             CmsEnvironment.InitForClientApplication(Application.StartupPath)
@@ -31,7 +34,10 @@ Public Class Form1
 
             Try
                 Dim Process As SynProcessor = New SynProcessor(pst, sysData.SynDatas(i))
-                Dim thread As New Thread(New ThreadStart(AddressOf Process.DealSynThread))
+                Process.printMessageHandler = New SynProcessor.printMessage(AddressOf printMessage)
+
+
+                Dim Thread As New Thread(New ThreadStart(AddressOf Process.DealSynThread))
                 thread.IsBackground = True
                 thread.Start()
             Catch ex As Exception
@@ -39,5 +45,22 @@ Public Class Form1
             End Try
 
         Next
+    End Sub
+    Public Sub setRichTextBox(ByVal msg As String)
+        If (Me.RichTextBox1.TextLength > 5000) Then
+            Me.RichTextBox1.Text = msg
+        Else
+            Me.RichTextBox1.Text = msg + vbCrLf + Me.RichTextBox1.Text
+        End If
+
+    End Sub
+    Public Sub printMessage(ByVal msg As String)
+
+        Me.BeginInvoke(setTextHandler, New Object() {msg})
+
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
     End Sub
 End Class
