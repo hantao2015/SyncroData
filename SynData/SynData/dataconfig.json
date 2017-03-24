@@ -8,7 +8,8 @@
      "getBysqlMethod": "Ajax_QueryBySql",
      "user": "demo1",
      "upass": "kingofdinner@2017",
-     "LoginToken":"KingOfDinner123456789",
+  "LoginToken": "KingOfDinner123456789",
+  "includedatalog": true,
    "SynDatas": [
     {
       "Active": "N",

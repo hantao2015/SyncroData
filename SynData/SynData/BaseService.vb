@@ -31,6 +31,7 @@ Public Class BaseService
         End If
         Dim requestid As Long = 0
         Dim str As String = Me.aRealsunClient.FlatformExecute(method, param, (requestid))
+        str.Replace("&", "[AND]")
         Return JsonConvert.DeserializeObject(Of PlatformResultModel)(str)
     End Function
     Public Shared Function ShowHostTableDatas_Ajax_GetDATA(ByVal dt As DataTable, ByVal state As String, ByVal target_synmonitorcolumnofid As String, ByVal synmonitorid As String, Optional sourcecmscolumns As String = "", Optional targetcmscolumns As String = "", Optional method As String = "", Optional targetresid As String = "") As ArrayList

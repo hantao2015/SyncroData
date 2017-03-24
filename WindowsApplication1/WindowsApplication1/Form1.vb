@@ -35,6 +35,7 @@ Public Class Form1
             Try
                 Dim Process As SynProcessor = New SynProcessor(pst, sysData.SynDatas(i))
                 Process.printMessageHandler = New SynProcessor.printMessage(AddressOf printMessage)
+                Process.includedatalog = sysData.includedatalog
 
 
                 Dim Thread As New Thread(New ThreadStart(AddressOf Process.DealSynThread))
@@ -62,5 +63,9 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        txt_cmsfunction.Text = CmsFunction.FilterSystemFunction(pst, txt_cmsfunction.Text)
     End Sub
 End Class

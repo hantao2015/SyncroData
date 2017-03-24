@@ -17,6 +17,7 @@ Public Class SynDefine
     Property getBysqlMethod As String
     Property user As String
     Property upass As String
+    Property includedatalog As Boolean
     Property SynDatas As List(Of OneSynDefine)
     Property LoginToken As String
 

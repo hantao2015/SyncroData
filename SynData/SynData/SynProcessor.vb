@@ -7,6 +7,7 @@ Public Class SynProcessor
     Private m_syndata As OneSynDefine
     Private listofhash2Save As New List(Of Hashtable)
     Public Property SyncroRows As Long = 0
+    Public Property includedatalog As Boolean = False
     Public Property intTotal As Long = 0
     Public Property monitorbatchid As Long = 0
     Public Delegate Sub printMessage(ByVal msg As String)
@@ -123,6 +124,7 @@ Public Class SynProcessor
             Pst.Dbc = OneSyndata.fetchdbc
 
             Return CmsTable.GetDatasetForHostTable(Pst, OneSyndata.source_resid, False, OneSyndata.cmswhere, "", "", intIndex * OneSyndata.pagesize, OneSyndata.pagesize)
+
         Catch ex As Exception
             errmesage = ex.Message.ToString()
             Return Nothing
@@ -160,6 +162,9 @@ Public Class SynProcessor
             Return False
         End If
         errmesage = ""
+        If includedatalog Then
+            SLog.Crucial(OneSyndata.uniquenameofsynname + ":data-----" + JsonConvert.SerializeObject(rows))
+        End If
         Return True
     End Function
 
@@ -236,6 +241,7 @@ Public Class SynProcessor
         param.Add("uniquecolumns", OneSyndata.uniquecolumns)
         param.Add("withoutdata", OneSyndata.withoutdata)
         param.Add("bytransvalue", OneSyndata.bytransvalue)
+
         Return SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass, OneSyndata.pushmethod)
 
     End Function
