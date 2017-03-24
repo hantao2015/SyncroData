@@ -12,6 +12,7 @@
    "SynDatas": [
     {
       "Active": "N",
+      "pushmethod": "ajax_InsertBatchData",
       "uniquenameofsynname": "人员信息同步1",
       "monitoridcolumn": "uniquenamesynname",
       "fetchurl": "http://kingofdinner.realsun.me:8081/rispweb/",
@@ -90,9 +91,9 @@
       "source_resid": "227186227531",
       "target_resid": "539457701388",
       "target_synmonitorcolumnofid": "C3_542374415384",
-      "cmswhere": "",
-      "sourcefields": "C3_227192472953,C3_227192484125",
-      "targetfields": "C3_539457726192,C3_539457741668",
+      "cmswhere": "C3_227192472953='800000006'",
+      "sourcefields": "REC_ID,C3_227192472953,C3_227192484125",
+      "targetfields": "REC_ID,C3_539457726192,C3_539457741668",
       "pagesize": 100,
       "uniquecolumns": "C3_539457726192",
       "withoutdata": "1",
