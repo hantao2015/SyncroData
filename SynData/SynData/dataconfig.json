@@ -11,7 +11,7 @@
      "LoginToken":"KingOfDinner123456789",
    "SynDatas": [
     {
-      "Active": "Y",
+      "Active": "N",
       "uniquenameofsynname": "人员信息同步1",
       "monitoridcolumn": "uniquenamesynname",
       "fetchurl": "http://kingofdinner.realsun.me:8081/rispweb/",
@@ -69,7 +69,8 @@
 
     },
       {
-      "Active": "Y",
+        "Active": "Y",
+        "pushmethod": "ajax_InsertBatchData",
       "uniquenameofsynname": "人员信息同步2",
       "monitoridcolumn": "uniquenamesynname",
       "pushurl": "http://kingofdinner.realsun.me:8081/rispweb/",

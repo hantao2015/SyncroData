@@ -33,7 +33,7 @@ Public Class BaseService
         Dim str As String = Me.aRealsunClient.FlatformExecute(method, param, (requestid))
         Return JsonConvert.DeserializeObject(Of PlatformResultModel)(str)
     End Function
-    Public Shared Function ShowHostTableDatas_Ajax_GetDATA(ByVal dt As DataTable, ByVal state As String, ByVal target_synmonitorcolumnofid As String, ByVal synmonitorid As String, Optional sourcecmscolumns As String = "", Optional targetcmscolumns As String = "") As ArrayList
+    Public Shared Function ShowHostTableDatas_Ajax_GetDATA(ByVal dt As DataTable, ByVal state As String, ByVal target_synmonitorcolumnofid As String, ByVal synmonitorid As String, Optional sourcecmscolumns As String = "", Optional targetcmscolumns As String = "", Optional method As String = "", Optional targetresid As String = "") As ArrayList
         Dim result As Hashtable = New Hashtable
         Dim alist As ArrayList
         Dim alistofcolumn As New List(Of String)
@@ -69,15 +69,38 @@ Public Class BaseService
 
         For i As Integer = 0 To alist.Count - 1
             Dim record As Hashtable = DirectCast(alist(i), Hashtable)
-            record.Add("_state", state)
-            record.Add("_id", i)
-            If record.ContainsKey("REC_ID") Then
-                record.Remove("REC_ID")
+            If method = "getrecid" Then
+                If Not record.ContainsKey("REC_ID") Then
+                    record.Add("REC_ID", TimeId.CurrentMillisecondsThreadSafe().ToString())
+                Else
+                    record("REC_ID") = TimeId.CurrentMillisecondsThreadSafe().ToString()
+                End If
+                If Not record.ContainsKey("REC_RESID") Then
+                    record.Add("REC_RESID", targetresid)
+                Else
+                    record("REC_RESID") = targetresid
+                End If
+                If Not record.ContainsKey("REC_CRTTIME") Then
+                    record.Add("REC_CRTTIME", DateTime.Now.ToString("yyyy-MM-dd HH:mm"))
+                Else
+                    record("REC_CRTTIME") = DateTime.Now.ToString("yyyy-MM-dd HH:mm")
+                End If
+            Else
+
+                record.Add("_state", state)
+                record.Add("_id", i)
+                If record.ContainsKey("REC_ID") Then
+                    record.Remove("REC_ID")
+                End If
+
             End If
 
             For k As Integer = 0 To alistoftargetcolumn.Count - 1
-                record.Add(alistoftargetcolumn(k), record(alistofcolumn(k)))
+
+                Dim obj As Object = record(alistofcolumn(k))
                 record.Remove(alistofcolumn(k))
+                record.Add(alistoftargetcolumn(k), obj)
+
             Next
             record.Add(target_synmonitorcolumnofid, synmonitorid)
             If record Is Nothing Then
@@ -120,6 +143,7 @@ Public Class BaseService
     Public Property PlatformWwwUrl As String
     Public Property saveMethod As String = "SaveData_Ajax"
     Public Property saveMethod2 As String = "ajax_SaveDataBytrans"
+    Public Property saveMethod3 As String = "ajax_InsertBatchData"
     Public Property saveMethodWithSub As String = "ajax_SaveDataWithSubTableBytrans"
 End Class
 

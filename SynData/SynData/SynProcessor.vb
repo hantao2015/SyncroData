@@ -149,8 +149,12 @@ Public Class SynProcessor
         End If
 
         If dt IsNot Nothing Then
+            If OneSyndata.pushmethod = "ajax_InsertBatchData" Then
+                rows = BaseService.ShowHostTableDatas_Ajax_GetDATA(dt, OneSyndata._state, OneSyndata.target_synmonitorcolumnofid, Convert.ToString(monitorbatchid), OneSyndata.sourcefields, OneSyndata.targetfields, "getrecid", OneSyndata.target_resid)
+            Else
+                rows = BaseService.ShowHostTableDatas_Ajax_GetDATA(dt, OneSyndata._state, OneSyndata.target_synmonitorcolumnofid, Convert.ToString(monitorbatchid), OneSyndata.sourcefields, OneSyndata.targetfields, "")
+            End If
 
-            rows = BaseService.ShowHostTableDatas_Ajax_GetDATA(dt, OneSyndata._state, OneSyndata.target_synmonitorcolumnofid, Convert.ToString(monitorbatchid), OneSyndata.sourcefields, OneSyndata.targetfields)
 
         Else
             Return False
@@ -159,14 +163,19 @@ Public Class SynProcessor
         Return True
     End Function
 
-    Public Function SaveData2Web(ByVal data As Hashtable, ByVal url As String, ByVal user As String, ByVal upass As String) As PlatformResultModel
+    Public Function SaveData2Web(ByVal data As Hashtable, ByVal url As String, ByVal user As String, ByVal upass As String, Optional ByVal method As String = "") As PlatformResultModel
         Dim bs As New BaseService()
         bs.PlatformWwwUrl = url
         bs.PlatformUser = user
         bs.PlatformPassword = upass
         Dim rt As PlatformResultModel = New PlatformResultModel()
         Try
-            rt = bs.Post(bs.saveMethod2, data)
+            If method = "" Then
+                rt = bs.Post(bs.saveMethod2, data)
+            Else
+                rt = bs.Post(method, data)
+            End If
+
 
         Catch ex As Exception
             rt.Error = -1
@@ -227,7 +236,7 @@ Public Class SynProcessor
         param.Add("uniquecolumns", OneSyndata.uniquecolumns)
         param.Add("withoutdata", OneSyndata.withoutdata)
         param.Add("bytransvalue", OneSyndata.bytransvalue)
-        Return SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
+        Return SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass, OneSyndata.pushmethod)
 
     End Function
     Public Function PushData2Client(ByVal rows As ArrayList, ByRef strErrorMessage As String) As Boolean

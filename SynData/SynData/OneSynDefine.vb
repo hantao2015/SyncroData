@@ -22,6 +22,7 @@ Public Class OneSynDefine
     Public pushurl As String
     Public pushuser As String
     Public pushupass As String
+    Public pushmethod As String = ""
     Public _state As String
     Public Property fetchupass As String
     Public Property fetchuser As String
