@@ -9,6 +9,7 @@ Public Class SynProcessor
     Private m_syndefine As SynDefine
     Private listofhash2Save As New List(Of Hashtable)
     Public Property SyncroRows As Long = 0
+    Public Property continueOnError As String = "N"
     Public Property includedatalog As Boolean = False
     Public Property intTotal As Long = 0
     Public Property monitorbatchid As Long = 0
@@ -370,10 +371,19 @@ Public Class SynProcessor
             errmsg = ex.Message.ToString()
         End Try
         If rows.Count > 0 Then
-            Dim oneRecord As Hashtable = DirectCast(rows.Item(0), Hashtable)
-            OneSyndata.cmswhere = Convert.ToString(oneRecord("C3_544372094587"))
-            OneSyndata.sysActive = Convert.ToString(oneRecord("C3_543946869297"))
-            OneSyndata.frequency = Convert.ToInt64(oneRecord("C3_543946898531"))
+            Try
+                Dim oneRecord As Hashtable = DirectCast(rows.Item(0), Hashtable)
+                OneSyndata.cmswhere = Convert.ToString(oneRecord("C3_544372094587"))
+                OneSyndata.sysActive = Convert.ToString(oneRecord("C3_543946869297"))
+                OneSyndata.frequency = Convert.ToInt64(oneRecord("C3_543946898531"))
+                continueOnError = Convert.ToString(oneRecord("C3_544477369294"))
+            Catch ex As Exception
+                OneSyndata.cmswhere = ""
+                OneSyndata.sysActive = "Y"
+                continueOnError = "N"
+                OneSyndata.frequency = 5
+            End Try
+
         Else
             OneSyndata.sysActive = "Y"
         End If
@@ -565,7 +575,12 @@ Public Class SynProcessor
                             If strErrorMessage <> "" Then
                                 SLog.Err(strErrorMessage)
                                 MonitorLog(strErrorMessage)
-                                Exit For
+                                If continueOnError = "Y" Then
+                                    Continue For
+                                Else
+                                    Exit For
+                                End If
+
                             End If
                         Else
 
@@ -581,7 +596,11 @@ Public Class SynProcessor
                         If strErrorMessage <> "" Then
                             SLog.Err(strErrorMessage)
                             MonitorLog(strErrorMessage)
-                            Exit For
+                            If continueOnError = "Y" Then
+                                Continue For
+                            Else
+                                Exit For
+                            End If
                         End If
                     End If
 
