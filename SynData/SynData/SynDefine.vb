@@ -20,5 +20,6 @@ Public Class SynDefine
     Property includedatalog As Boolean
     Property SynDatas As List(Of OneSynDefine)
     Property LoginToken As String
+    Property getOneRowMethod As String
 
 End Class

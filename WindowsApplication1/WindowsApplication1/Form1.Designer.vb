@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     'Form 重写 Dispose，以清理组件列表。
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,18 +20,17 @@ Partial Class Form1
     '注意: 以下过程是 Windows 窗体设计器所必需的
     '可以使用 Windows 窗体设计器修改它。  
     '不要使用代码编辑器修改它。
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.txt_cmsfunction = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(12, 28)
+        Me.Button1.Location = New System.Drawing.Point(12, 12)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 0
@@ -40,7 +39,7 @@ Partial Class Form1
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(13, 69)
+        Me.Button2.Location = New System.Drawing.Point(93, 12)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 23)
         Me.Button2.TabIndex = 1
@@ -49,49 +48,28 @@ Partial Class Form1
         '
         'RichTextBox1
         '
-        Me.RichTextBox1.Location = New System.Drawing.Point(186, 12)
+        Me.RichTextBox1.Location = New System.Drawing.Point(12, 41)
         Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.Size = New System.Drawing.Size(1057, 469)
+        Me.RichTextBox1.Size = New System.Drawing.Size(779, 440)
         Me.RichTextBox1.TabIndex = 2
         Me.RichTextBox1.Text = ""
-        '
-        'Button3
-        '
-        Me.Button3.Location = New System.Drawing.Point(61, 267)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(119, 23)
-        Me.Button3.TabIndex = 3
-        Me.Button3.Text = "FilterFunction"
-        Me.Button3.UseVisualStyleBackColor = True
-        '
-        'txt_cmsfunction
-        '
-        Me.txt_cmsfunction.Location = New System.Drawing.Point(12, 188)
-        Me.txt_cmsfunction.Multiline = True
-        Me.txt_cmsfunction.Name = "txt_cmsfunction"
-        Me.txt_cmsfunction.Size = New System.Drawing.Size(168, 73)
-        Me.txt_cmsfunction.TabIndex = 4
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1249, 493)
-        Me.Controls.Add(Me.txt_cmsfunction)
-        Me.Controls.Add(Me.Button3)
+        Me.ClientSize = New System.Drawing.Size(804, 493)
         Me.Controls.Add(Me.RichTextBox1)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Form1"
-        Me.Text = "Form1"
+        Me.Text = "数据同步"
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents Button1 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents RichTextBox1 As RichTextBox
-    Friend WithEvents Button3 As Button
-    Friend WithEvents txt_cmsfunction As TextBox
 End Class

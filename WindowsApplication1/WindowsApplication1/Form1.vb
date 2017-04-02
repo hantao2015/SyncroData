@@ -33,7 +33,7 @@ Public Class Form1
         For i As Integer = 0 To sysData.SynDatas.Count - 1
 
             Try
-                Dim Process As SynProcessor = New SynProcessor(pst, sysData.SynDatas(i))
+                Dim Process As SynProcessor = New SynProcessor(pst, sysData, sysData.SynDatas(i))
                 Process.printMessageHandler = New SynProcessor.printMessage(AddressOf printMessage)
                 Process.includedatalog = sysData.includedatalog
 
@@ -65,7 +65,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        txt_cmsfunction.Text = CmsFunction.FilterSystemFunction(pst, txt_cmsfunction.Text)
+    Private Sub Button3_Click(sender As Object, e As EventArgs)
+        '  txt_cmsfunction.Text = CmsFunction.FilterSystemFunction(pst, txt_cmsfunction.Text)
     End Sub
 End Class

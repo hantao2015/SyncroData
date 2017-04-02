@@ -6,10 +6,11 @@
      "saveMethod": "SaveData_Ajax",
      "saveMethod2": "ajax_SaveDataBytrans",
      "getBysqlMethod": "Ajax_QueryBySql",
+     "getOneRowMethod": "ajax_GetOneRowByWhere",
      "user": "demo1",
      "upass": "kingofdinner@2017",
-  "LoginToken": "KingOfDinner123456789",
-  "includedatalog": true,
+      "LoginToken": "KingOfDinner123456789",
+      "includedatalog": true,
    "SynDatas": [
     {
       "Active": "N",
@@ -81,7 +82,7 @@
       "fetchurl": "http://www.realsun.me:8003/rispweb/",
       "fetchuser": "demo1",
       "fetchupass": "",
-
+      "sysActive": "Y",
         "monitor_resid": "542290864273",
          "monitor_colofendtime": "C3_542630825826", 
        "monitor_colofrecords":"C3_542630836091", 

@@ -1,10 +1,12 @@
-﻿Imports HS.Platform
+﻿Imports System.Threading
+Imports HS.Platform
 Imports MiniUiAppCode.Platform
 Imports Newtonsoft.Json
 
 Public Class SynProcessor
     Private m_pst As CmsPassport
     Private m_syndata As OneSynDefine
+    Private m_syndefine As SynDefine
     Private listofhash2Save As New List(Of Hashtable)
     Public Property SyncroRows As Long = 0
     Public Property includedatalog As Boolean = False
@@ -12,6 +14,7 @@ Public Class SynProcessor
     Public Property monitorbatchid As Long = 0
     Public Delegate Sub printMessage(ByVal msg As String)
     Public printMessageHandler As printMessage = Nothing
+
 
 
 
@@ -36,10 +39,12 @@ Public Class SynProcessor
 
         End Set
     End Property
-    Public Sub New(ByVal pst As CmsPassport, ByVal syndata As OneSynDefine)
+
+    Public Sub New(ByVal pst As CmsPassport, ByVal syndefine As SynDefine, ByVal syndata As OneSynDefine)
         Dim errmsg As String = ""
         m_pst = pst
         m_syndata = syndata
+        m_syndefine = syndefine
         pst = CmsPassport.GenerateCmsPassportBySysuser()
         If Not CheckSyndata(errmsg) Then
             Throw New Exception(errmsg)
@@ -229,7 +234,7 @@ Public Class SynProcessor
             End If
         Else
 
-                blrt = PushData2Client(rows, strErrorMessage)
+            blrt = PushData2Client(rows, strErrorMessage)
         End If
         Return blrt
     End Function
@@ -237,7 +242,13 @@ Public Class SynProcessor
 
         Dim param As Hashtable = New Hashtable()
         param.Add("resid", OneSyndata.target_resid)
-        param.Add("data", JsonConvert.SerializeObject(rows))
+        Dim str As String = JsonConvert.SerializeObject(rows)
+
+
+        If includedatalog Then
+            SLog.Crucial(OneSyndata.uniquenameofsynname + "--PushData2Web:str-----" + str)
+        End If
+        param.Add("data", str)
         param.Add("uniquecolumns", OneSyndata.uniquecolumns)
         param.Add("withoutdata", OneSyndata.withoutdata)
         param.Add("bytransvalue", OneSyndata.bytransvalue)
@@ -333,26 +344,61 @@ Public Class SynProcessor
     Public Sub endDoPrintMessage()
 
     End Sub
+    Public Sub getSyndataFromHost()
+        Dim bs As New BaseService()
+        bs.PlatformWwwUrl = m_syndefine.baseUrl
+        bs.PlatformUser = m_syndefine.user
+        bs.PlatformPassword = m_syndefine.upass
+        Dim param As Hashtable = New Hashtable()
+        Dim listofdata As New ArrayList()
+        Dim cmscolumns As New ArrayList
+        Dim rows As New List(Of Hashtable)
+        Dim errmsg As String
+        param.Add("resid", "543946705485")
+        param.Add("cmswhere", "C3_543946721063='" + OneSyndata.uniquenameofsynname + "'")
+        param.Add("saveandget", "1")
+        Dim rt As PlatformResultModel = New PlatformResultModel()
+        Try
+            rt = bs.Post(m_syndefine.getOneRowMethod, param)
+            If (rt.Error = 0) Then
+                rows = JsonConvert.DeserializeObject(Of List(Of Hashtable))(rt.Data.ToString())
+                errmsg = ""
+            Else
+                errmsg = rt.Message
+            End If
+        Catch ex As Exception
+            errmsg = ex.Message.ToString()
+        End Try
+        If rows.Count > 0 Then
+            Dim oneRecord As Hashtable = DirectCast(rows.Item(0), Hashtable)
+            OneSyndata.cmswhere = Convert.ToString(oneRecord("C3_544372094587"))
+            OneSyndata.sysActive = Convert.ToString(oneRecord("C3_543946869297"))
+            OneSyndata.frequency = Convert.ToInt64(oneRecord("C3_543946898531"))
+        Else
+            OneSyndata.sysActive = "Y"
+        End If
+    End Sub
     Public Sub DealSynThread()
         Dim strMsg As String = "开始同步:" + OneSyndata.uniquenameofsynname
         Try
 
             If (OneSyndata.Active = "Y") Then
-                Dim batchid As Long = TimeId.CurrentMillisecondsThreadSafe()
-
-                StartMonitor()
-                SLog.Crucial(strMsg)
-                doPrintMessage(strMsg)
-                MonitorLog(strMsg)
-
-
-
-                DealSyn()
-                strMsg = "同步结束:" + OneSyndata.uniquenameofsynname + "，源记录数:" + intTotal.ToString() + "，已同步的记录数:" + SyncroRows.ToString()
-                SLog.Crucial(strMsg)
-                MonitorLog(strMsg)
-                doPrintMessage(strMsg)
-                EndMonitor()
+                getSyndataFromHost()
+                If OneSyndata.sysActive = "Y" Then
+                    Dim batchid As Long = TimeId.CurrentMillisecondsThreadSafe()
+                    StartMonitor()
+                    SLog.Crucial(strMsg)
+                    doPrintMessage(strMsg)
+                    MonitorLog(strMsg)
+                    DealSyn()
+                    strMsg = "同步结束:" + OneSyndata.uniquenameofsynname + "，源记录数:" + intTotal.ToString() + "，已同步的记录数:" + SyncroRows.ToString()
+                    SLog.Crucial(strMsg)
+                    MonitorLog(strMsg)
+                    doPrintMessage(strMsg)
+                    EndMonitor()
+                End If
+                Thread.Sleep(OneSyndata.frequency * 1000)
+                DealSynThread()
             End If
         Catch ex As Exception
             strMsg = "处理同步失败-" + OneSyndata.uniquenameofsynname + ex.Message
@@ -373,7 +419,7 @@ Public Class SynProcessor
         param.Add("resid", OneSyndata.monitorlog_resid)
         row.Add(OneSyndata.monitorlog_colofbatchid, monitorbatchid)
         row.Add(OneSyndata.monitorlog_colofcontent, content)
-        row.Add(OneSyndata.monitorlog_coloftime, DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"))
+        row.Add(OneSyndata.monitorlog_coloftime, DateTime.Now.ToString("yyyy-MM-dd HH:mm:sss"))
         row.Add("_id", 1)
         row.Add("_state", "added")
         rows.Add(row)
@@ -412,7 +458,7 @@ Public Class SynProcessor
         Dim intIndex As Long = 0
         param.Add("resid", OneSyndata.monitor_resid)
         row.Add("REC_ID", monitorbatchid)
-        row.Add(OneSyndata.monitor_colofendtime, DateTime.Now.ToString("yyyy-MM-dd hh:mm"))
+        row.Add(OneSyndata.monitor_colofendtime, DateTime.Now.ToString("yyyy-MM-dd HH:mm:sss"))
         row.Add(OneSyndata.monitor_colofrecords, intTotal)
         row.Add("_id", 1)
         row.Add("_state", "modified")
@@ -498,8 +544,8 @@ Public Class SynProcessor
         Dim strErrorMessage As String = ""
         Dim intPagecount As Long = 0
         Dim intIndex As Long = 0
-
-
+        SyncroRows = 0
+        intTotal = 0
         If monitorbatchid > 0 Then
             '先fetch rowscount ,根据pagesize分页获取rows
             intTotal = getDataCount(strErrorMessage, OneSyndata.fetchdbc, OneSyndata.source_resid, OneSyndata.cmswhere, OneSyndata.fetchtype, OneSyndata.fetchurl, OneSyndata.fetchuser, OneSyndata.fetchupass)

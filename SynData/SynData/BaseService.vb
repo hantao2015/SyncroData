@@ -31,7 +31,7 @@ Public Class BaseService
         End If
         Dim requestid As Long = 0
         Dim str As String = Me.aRealsunClient.FlatformExecute(method, param, (requestid))
-        str.Replace("&", "[AND]")
+
         Return JsonConvert.DeserializeObject(Of PlatformResultModel)(str)
     End Function
     Public Shared Function ShowHostTableDatas_Ajax_GetDATA(ByVal dt As DataTable, ByVal state As String, ByVal target_synmonitorcolumnofid As String, ByVal synmonitorid As String, Optional sourcecmscolumns As String = "", Optional targetcmscolumns As String = "", Optional method As String = "", Optional targetresid As String = "") As ArrayList
@@ -99,8 +99,18 @@ Public Class BaseService
             For k As Integer = 0 To alistoftargetcolumn.Count - 1
 
                 Dim obj As Object = record(alistofcolumn(k))
+                Dim str As String = Convert.ToString(obj)
                 record.Remove(alistofcolumn(k))
-                record.Add(alistoftargetcolumn(k), obj)
+                If str.IndexOf("&") > 0 Then
+                    str = str.Replace("&", "-")
+                    record.Add(alistoftargetcolumn(k), str)
+                Else
+                    record.Add(alistoftargetcolumn(k), obj)
+                End If
+
+
+
+
 
             Next
             record.Add(target_synmonitorcolumnofid, synmonitorid)

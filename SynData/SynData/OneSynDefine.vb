@@ -34,5 +34,8 @@ Public Class OneSynDefine
     Public Property pushtype As String
     Public Property fetchtype As String
     Property Active As String
+    Property sysActive As String = "Y"
     Property bytransvalue As String = "1"
+    Property frequency As Int64 = 5
+
 End Class
