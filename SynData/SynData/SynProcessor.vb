@@ -385,7 +385,7 @@ Public Class SynProcessor
             End Try
 
         Else
-            OneSyndata.sysActive = "Y"
+            OneSyndata.sysActive = "N"
         End If
     End Sub
     Public Sub DealSynThread()
