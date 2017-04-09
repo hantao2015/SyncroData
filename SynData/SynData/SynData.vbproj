@@ -50,14 +50,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="hsopPlatform">
-      <HintPath>H:\github\00RispSourceMiniUISource\RispBsUI\rispweb\bin\hsopPlatform.dll</HintPath>
+      <HintPath>..\..\lib\hsopPlatform.dll</HintPath>
     </Reference>
     <Reference Include="HsPlatform">
-      <HintPath>H:\github\00RispSourceMiniUISource\RispBsUI\rispweb\bin\HsPlatform.dll</HintPath>
+      <HintPath>..\..\lib\HsPlatform.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>H:\github\00RispSourceMiniUISource\RispBsUI\rispweb\bin\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="MiniUiAppCode.Platform">
+      <HintPath>..\..\lib\MiniUiAppCode.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -151,12 +153,6 @@
     <Content Include="data\conf\app_menu_user_en.xml" />
     <Content Include="data\conf\app_msg_cn.xml" />
     <Content Include="data\conf\app_msg_en.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="H:\github\00RispSourceMiniUISource\RispBsUI\MiniUiAppCode\MiniUiAppCode.Platform.csproj">
-      <Project>{50b5c7e5-e78b-4b4a-a5c2-214a286f3183}</Project>
-      <Name>MiniUiAppCode.Platform</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions />

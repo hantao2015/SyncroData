@@ -379,7 +379,7 @@ Public Class SynProcessor
                 continueOnError = Convert.ToString(oneRecord("C3_544477369294"))
             Catch ex As Exception
                 OneSyndata.cmswhere = ""
-                OneSyndata.sysActive = "Y"
+                OneSyndata.sysActive = "N"
                 continueOnError = "N"
                 OneSyndata.frequency = 5
             End Try
@@ -416,6 +416,52 @@ Public Class SynProcessor
             MonitorLog(strMsg)
             doPrintMessage(strMsg)
         End Try
+
+    End Sub
+    Public Sub UpdateProgress(ByVal curRecordCount As Long)
+        Dim param As Hashtable = New Hashtable()
+        Dim row As New Hashtable
+        Dim rows As New ArrayList
+        Dim strErrorMessage As String = ""
+        Dim intPagecount As Long = 0
+        Dim intIndex As Long = 0
+        param.Add("resid", OneSyndata.monitor_resid)
+        row.Add("REC_ID", monitorbatchid)
+        row.Add(OneSyndata.monitor_colofendtime, DateTime.Now.ToString("yyyy-MM-dd HH:mm:sss"))
+        row.Add(OneSyndata.monitor_colofrecords, intTotal)
+        row.Add("C3_545046524620", curRecordCount)
+        row.Add("_id", 1)
+        row.Add("_state", "modified")
+        rows.Add(row)
+        param.Add("data", JsonConvert.SerializeObject(rows))
+        If OneSyndata.pushtype = "web" Then
+            Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
+            If rt.Error = 0 Then
+                monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
+            Else
+                Dim strMsg As String = "web 添加监控记录失败:" + rt.Message
+                SLog.Err(strMsg)
+                MonitorLog(strMsg)
+                doPrintMessage(strMsg)
+            End If
+        Else
+
+            Dim listofdataReturn As New List(Of Hashtable)
+            Pst.Dbc = OneSyndata.pushdbc
+            Try
+                Dim cr As CmsTableReturn = CmsTable.EditRecord(Pst, OneSyndata.monitor_resid, Convert.ToInt64(monitorbatchid), row)
+
+            Catch ex As Exception
+
+
+                Dim strMsg As String = "client 添加监控记录失败:" + ex.Message.ToString
+                SLog.Err(strMsg)
+                MonitorLog(strMsg)
+                doPrintMessage(strMsg)
+            End Try
+
+
+        End If
 
     End Sub
     Public Sub MonitorLog(ByVal content As String)
@@ -589,9 +635,11 @@ Public Class SynProcessor
 
                             Dim strMsg As String = "同步任务:" + OneSyndata.uniquenameofsynname + ",当前同步完成记录数:" + SyncroRows.ToString()
                             SLog.Err(strMsg)
+                            UpdateProgress(SyncroRows)
                             MonitorLog(strMsg)
                             doPrintMessage(strMsg)
                         End If
+
                     Else
                         If strErrorMessage <> "" Then
                             SLog.Err(strErrorMessage)
@@ -604,8 +652,8 @@ Public Class SynProcessor
                         End If
                     End If
 
-                    '将rows转成可提交的数据
-                    '提交数据
+
+
                 Next
             End If
 

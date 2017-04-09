@@ -13,12 +13,6 @@ C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\bin\Debug\MySql.Data.dl
 C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\bin\Debug\Interop.ADOX.dll
 C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\bin\Debug\Interop.ADODB.dll
 C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\bin\Debug\SharpZipLib.dll
-C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\bin\Debug\MiniUiAppCode.Platform.pdb
-C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\bin\Debug\hsopPlatform.pdb
-C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\bin\Debug\hsopPlatform.xml
-C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\bin\Debug\HsPlatform.pdb
-C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\bin\Debug\HsPlatform.xml
-C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\obj\Debug\SynData.vbprojResolveAssemblyReference.cache
 C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\obj\Debug\SynData.Form1.resources
 C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\obj\Debug\SynData.Resources.resources
 C:\Users\charles\Source\Repos\SyncroData\SynData\SynData\obj\Debug\SynData.vbproj.GenerateResource.Cache
