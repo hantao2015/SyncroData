@@ -58,8 +58,9 @@
     <Reference Include="MiniUiAppCode.Platform">
       <HintPath>..\..\lib\MiniUiAppCode.Platform.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\00RispSourceMiniUISource\RispBsUI\rispweb\bin\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -153,6 +154,12 @@
     <Content Include="data\conf\app_menu_user_en.xml" />
     <Content Include="data\conf\app_msg_cn.xml" />
     <Content Include="data\conf\app_msg_en.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\RealsunSynDataServerGuard\RealsunSynDataServerGuard.vbproj">
+      <Project>{e3018a86-ce9b-4a33-b774-691c3d31730a}</Project>
+      <Name>RealsunSynDataServerGuard</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <ProjectExtensions />

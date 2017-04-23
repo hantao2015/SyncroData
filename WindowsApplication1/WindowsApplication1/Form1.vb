@@ -11,6 +11,7 @@ Public Class Form1
     Public setTextHandler As setText = New setText(AddressOf Me.setRichTextBox)
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Button1.Enabled = False
         Try
             CmsEnvironment.InitForClientApplication(Application.StartupPath)
             pst = CmsPassport.GenerateCmsPassportBySysuser()
@@ -30,6 +31,7 @@ Public Class Form1
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Button2.Enabled = False
         For i As Integer = 0 To sysData.SynDatas.Count - 1
 
             Try
@@ -39,8 +41,8 @@ Public Class Form1
 
 
                 Dim Thread As New Thread(New ThreadStart(AddressOf Process.DealSynThread))
-                thread.IsBackground = True
-                thread.Start()
+                Thread.IsBackground = True
+                Thread.Start()
             Catch ex As Exception
                 SLog.Err("同步数据配置失败-" + sysData.SynDatas(i).uniquenameofsynname + ",错误信息:" + ex.Message)
             End Try
@@ -62,6 +64,8 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Button1.PerformClick()
+        Button2.PerformClick()
 
     End Sub
 

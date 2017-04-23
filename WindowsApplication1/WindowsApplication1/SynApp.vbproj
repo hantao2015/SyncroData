@@ -51,12 +51,13 @@
     <ApplicationIcon>synchronization_128px_1205498_easyicon.net.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HsPlatform">
-      <HintPath>..\..\..\00RispSourceMiniUISource\RispBsUI\rispweb\bin\HsPlatform.dll</HintPath>
+    <Reference Include="HsPlatform, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>H:\github\00RispSourceMiniUISource\RispBsUI\rispweb\bin\HsPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\00RispSourceMiniUISource\RispBsUI\rispweb\bin\Newtonsoft.Json.dll</HintPath>
+      <HintPath>H:\github\00RispSourceMiniUISource\RispBsUI\rispweb\bin\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -126,6 +127,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\RealsunMiniServerGuard\RealsunSynDataServerGuard.vbproj">
+      <Project>{e3018a86-ce9b-4a33-b774-691c3d31730a}</Project>
+      <Name>RealsunSynDataServerGuard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SynData\SynData\SynData.vbproj">
       <Project>{8a3c7503-cc49-4c88-b9bc-d55158e1962c}</Project>
       <Name>SynData</Name>
