@@ -434,9 +434,10 @@ Public Class SynProcessor
         row.Add("_state", "modified")
         rows.Add(row)
         param.Add("data", JsonConvert.SerializeObject(rows))
-        If OneSyndata.pushtype = "web" Then
-            Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
-            If rt.Error = 0 Then
+        'If OneSyndata.pushtype = "web" Then
+        'Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
+        Dim rt As PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
+        If rt.Error = 0 Then
                 monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
             Else
                 Dim strMsg As String = "web 添加监控记录失败:" + rt.Message
@@ -444,24 +445,24 @@ Public Class SynProcessor
                 MonitorLog(strMsg)
                 doPrintMessage(strMsg)
             End If
-        Else
+        'Else
 
-            Dim listofdataReturn As New List(Of Hashtable)
-            Pst.Dbc = OneSyndata.pushdbc
-            Try
-                Dim cr As CmsTableReturn = CmsTable.EditRecord(Pst, OneSyndata.monitor_resid, Convert.ToInt64(monitorbatchid), row)
+        '    Dim listofdataReturn As New List(Of Hashtable)
+        '    Pst.Dbc = OneSyndata.pushdbc
+        '    Try
+        '        Dim cr As CmsTableReturn = CmsTable.EditRecord(Pst, OneSyndata.monitor_resid, Convert.ToInt64(monitorbatchid), row)
 
-            Catch ex As Exception
-
-
-                Dim strMsg As String = "client 添加监控记录失败:" + ex.Message.ToString
-                SLog.Err(strMsg)
-                MonitorLog(strMsg)
-                doPrintMessage(strMsg)
-            End Try
+        '    Catch ex As Exception
 
 
-        End If
+        '        Dim strMsg As String = "client 添加监控记录失败:" + ex.Message.ToString
+        '        SLog.Err(strMsg)
+        '        MonitorLog(strMsg)
+        '        doPrintMessage(strMsg)
+        '    End Try
+
+
+        'End If
 
     End Sub
     Public Sub MonitorLog(ByVal content As String)
@@ -480,30 +481,31 @@ Public Class SynProcessor
         row.Add("_state", "added")
         rows.Add(row)
         param.Add("data", JsonConvert.SerializeObject(rows))
-        If OneSyndata.pushtype = "web" Then
-            Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
-            If rt.Error = 0 Then
+        'If OneSyndata.pushtype = "web" Then
+        'Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
+        Dim rt As PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
+        If rt.Error = 0 Then
 
             Else
                 Dim strMsg As String = "web 添加监控日志记录失败:" + rt.Message
                 SLog.Err(strMsg)
                 doPrintMessage(strMsg)
             End If
-        Else
+        'Else
 
-            Dim listofdataReturn As New List(Of Hashtable)
-            Pst.Dbc = OneSyndata.pushdbc
-            Try
-                CmsTable.AddRecord(Pst, OneSyndata.monitorlog_resid, row)
-            Catch ex As Exception
+        'Dim listofdataReturn As New List(Of Hashtable)
+        'Pst.Dbc = OneSyndata.pushdbc
+        'Try
+        '    CmsTable.AddRecord(Pst, OneSyndata.monitorlog_resid, row)
+        'Catch ex As Exception
 
-                Dim strMsg As String = "client 添加监控日志记录失败:" + ex.Message.ToString()
-                SLog.Err(strMsg)
-                doPrintMessage(strMsg)
-            End Try
+        '    Dim strMsg As String = "client 添加监控日志记录失败:" + ex.Message.ToString()
+        '    SLog.Err(strMsg)
+        '    doPrintMessage(strMsg)
+        'End Try
 
 
-        End If
+        'End If
     End Sub
     Public Sub EndMonitor()
         Dim param As Hashtable = New Hashtable()
@@ -520,8 +522,9 @@ Public Class SynProcessor
         row.Add("_state", "modified")
         rows.Add(row)
         param.Add("data", JsonConvert.SerializeObject(rows))
-        If OneSyndata.pushtype = "web" Then
-            Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
+        'If OneSyndata.pushtype = "web" Then
+        '  Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
+        Dim rt As PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
             If rt.Error = 0 Then
                 monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
             Else
@@ -530,24 +533,24 @@ Public Class SynProcessor
                 MonitorLog(strMsg)
                 doPrintMessage(strMsg)
             End If
-        Else
+        'Else
 
-            Dim listofdataReturn As New List(Of Hashtable)
-            Pst.Dbc = OneSyndata.pushdbc
-            Try
-                Dim cr As CmsTableReturn = CmsTable.EditRecord(Pst, OneSyndata.monitor_resid, Convert.ToInt64(monitorbatchid), row)
+        'Dim listofdataReturn As New List(Of Hashtable)
+        '    Pst.Dbc = OneSyndata.pushdbc
+        '    Try
+        '        Dim cr As CmsTableReturn = CmsTable.EditRecord(Pst, OneSyndata.monitor_resid, Convert.ToInt64(monitorbatchid), row)
 
-            Catch ex As Exception
-
-
-                Dim strMsg As String = "client 添加监控记录失败:" + ex.Message.ToString
-                SLog.Err(strMsg)
-                MonitorLog(strMsg)
-                doPrintMessage(strMsg)
-            End Try
+        '    Catch ex As Exception
 
 
-        End If
+        '        Dim strMsg As String = "client 添加监控记录失败:" + ex.Message.ToString
+        '        SLog.Err(strMsg)
+        '        MonitorLog(strMsg)
+        '        doPrintMessage(strMsg)
+        '    End Try
+
+
+        'End If
 
 
     End Sub
@@ -565,34 +568,35 @@ Public Class SynProcessor
         row.Add("_state", "added")
         rows.Add(row)
         param.Add("data", JsonConvert.SerializeObject(rows))
-        If OneSyndata.pushtype = "web" Then
-            Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
-            If rt.Error = 0 Then
-                monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
-            Else
+        ' If OneSyndata.pushtype = "web" Then
+        '   Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
+        Dim rt As PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
+        If rt.Error = 0 Then
+            monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
+        Else
 
-                Dim strMsg As String = "web 添加监控记录失败:" + rt.Message
+            Dim strMsg As String = "web 添加监控记录失败:" + rt.Message
                 SLog.Err(strMsg)
                 MonitorLog(strMsg)
                 doPrintMessage(strMsg)
             End If
-        Else
+        ' Else
 
-            Dim listofdataReturn As New List(Of Hashtable)
-            Try
-                Pst.Dbc = OneSyndata.pushdbc
-                Dim cr As CmsTableReturn = CmsTable.AddRecord(Pst, OneSyndata.monitor_resid, row)
-                monitorbatchid = cr.RecID
-            Catch ex As Exception
+        'Dim listofdataReturn As New List(Of Hashtable)
+        'Try
+        '    Pst.Dbc = OneSyndata.pushdbc
+        '    Dim cr As CmsTableReturn = CmsTable.AddRecord(Pst, OneSyndata.monitor_resid, row)
+        '    monitorbatchid = cr.RecID
+        'Catch ex As Exception
 
-                Dim strMsg As String = "client 添加监控记录失败:" + ex.Message.ToString()
-                SLog.Err(strMsg)
-                MonitorLog(strMsg)
-                doPrintMessage(strMsg)
-            End Try
+        '    Dim strMsg As String = "client 添加监控记录失败:" + ex.Message.ToString()
+        '    SLog.Err(strMsg)
+        '    MonitorLog(strMsg)
+        '    doPrintMessage(strMsg)
+        'End Try
 
 
-        End If
+        '  End If
 
 
     End Sub
