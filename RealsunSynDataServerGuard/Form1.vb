@@ -16,7 +16,18 @@ Public Class RealsunSynDataServerGuard
         Me.NotifyIcon1.Visible = True
         Timer1.Start()
     End Sub
+    Private Sub killprocess()
+        Dim process As Process() = System.Diagnostics.Process.GetProcesses()
 
+
+        For Each prc As Process In process
+            If prc.ProcessName = "RealsunSynData" Then
+                prc.Kill()
+
+            End If
+        Next
+
+    End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
 
         Dim create As Boolean = False
@@ -24,6 +35,11 @@ Public Class RealsunSynDataServerGuard
             If System.Diagnostics.Process.GetProcessesByName("RealsunSynData").Length <= 0 Then
                 System.Diagnostics.Process.Start("RealsunSynData.exe")
             End If
+            Dim H As Integer = DateAndTime.Now.Hour
+            If H = 0 Then
+                killprocess()
+            End If
+
         Catch ex As Exception
 
         End Try

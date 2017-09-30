@@ -36,3 +36,8 @@ H:\github\SyncroData\SynData\SynData\obj\Debug\SynData.vbproj.GenerateResource.C
 H:\github\SyncroData\SynData\SynData\obj\Debug\SynData.dll
 H:\github\SyncroData\SynData\SynData\obj\Debug\SynData.xml
 H:\github\SyncroData\SynData\SynData\obj\Debug\SynData.pdb
+H:\github\SyncroData\SynData\SynData\bin\Debug\Newtonsoft.Json.xml
+H:\github\SyncroData\SynData\SynData\bin\Debug\MiniUiAppCode.Platform.dll
+H:\github\SyncroData\SynData\SynData\bin\Debug\Newtonsoft.Json.Net20.dll
+H:\github\SyncroData\SynData\SynData\bin\Debug\MySql.Data.dll
+H:\github\SyncroData\SynData\SynData\bin\Debug\MiniUiAppCode.Platform.pdb
