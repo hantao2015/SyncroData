@@ -153,10 +153,6 @@
     <Content Include="data\conf\app_msg_en.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\00RispSourceMiniUISource\RispBsUI\MiniUiAppCode\MiniUiAppCode.Platform.csproj">
-      <Project>{50b5c7e5-e78b-4b4a-a5c2-214a286f3183}</Project>
-      <Name>MiniUiAppCode.Platform</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\RealsunSynDataServerGuard\RealsunSynDataServerGuard.vbproj">
       <Project>{e3018a86-ce9b-4a33-b774-691c3d31730a}</Project>
       <Name>RealsunSynDataServerGuard</Name>

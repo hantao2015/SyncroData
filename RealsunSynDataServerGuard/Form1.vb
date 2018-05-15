@@ -36,7 +36,7 @@ Public Class RealsunSynDataServerGuard
                 System.Diagnostics.Process.Start("RealsunSynData.exe")
             End If
             Dim H As Integer = DateAndTime.Now.Hour
-            If H = 0 Then
+            If H = 2 Then
                 killprocess()
             End If
 
