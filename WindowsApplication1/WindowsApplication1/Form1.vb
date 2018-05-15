@@ -3,6 +3,13 @@ Imports System.Threading
 Imports HS.Platform
 Imports Newtonsoft.Json
 Imports SynData
+Imports LumiSoft.Net.Mail
+Imports LumiSoft.Net
+Imports LumiSoft.Net.Mime
+Imports MiniUiAppCode.Platform
+Imports MiniUiAppCode.Platform.Utils
+
+
 
 Public Class Form1
     Public pst As CmsPassport
@@ -16,8 +23,8 @@ Public Class Form1
             CmsEnvironment.InitForClientApplication(Application.StartupPath)
             pst = CmsPassport.GenerateCmsPassportBySysuser()
             Dim filepath As String = "dataconfig.json"
-            Dim stream As FileStream = File.OpenRead(filepath)
-            Dim txtrd As TextReader = New StringReader((File.ReadAllText(filepath)))
+            Dim stream As FileStream = System.IO.File.OpenRead(filepath)
+            Dim txtrd As TextReader = New System.IO.StringReader((System.IO.File.ReadAllText(filepath)))
 
             Dim jsrd As JsonTextReader = New JsonTextReader(txtrd)
 
@@ -71,5 +78,40 @@ Public Class Form1
 
     Private Sub Button3_Click(sender As Object, e As EventArgs)
         '  txt_cmsfunction.Text = CmsFunction.FilterSystemFunction(pst, txt_cmsfunction.Text)
+    End Sub
+
+    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
+
+    End Sub
+
+    Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim popServer As String = Text_server.Text
+        Dim popPort As String = Text_port.Text
+        Dim user As String = Text_user.Text
+        Dim pass As String = Text_pass.Text
+        Dim isDelete As Boolean = Check_delete.Checked
+        '''''''''''''''''''''''''''''''''''''''''''''''''
+        '''''''''''''''''''''''''''''''''''''''''''''''''
+        Dim resid As Long = 0
+        Dim uIDCol As String = ""
+        Dim senderCol As String = ""
+        Dim bodyTextCol As String = ""
+        Dim bodyHtmlTextCol As String = ""
+        Dim subjectCol As String = ""
+        MiniUiAppCode.Platform.Utils.LumiSoft.password = pass
+        MiniUiAppCode.Platform.Utils.LumiSoft.pop3Port = popPort
+        MiniUiAppCode.Platform.Utils.LumiSoft.pop3Server = popServer
+        MiniUiAppCode.Platform.Utils.LumiSoft.username = user
+        Dim result As List(Of LumiSoft.Net.Mail.Mail_Message) = New List(Of Mail_Message)()
+        Try
+            result = MiniUiAppCode.Platform.Utils.LumiSoft.GetEmails(pst, resid, uIDCol, senderCol, bodyHtmlTextCol, bodyHtmlTextCol, subjectCol, popServer, popPort, user, pass, False)
+        Catch ex As Exception
+            Me.RichTextBox1.Text = "GetEmails Error:" + ex.Message.ToString()
+        End Try
+
+    End Sub
+
+    Private Sub Text_server_TextChanged(sender As Object, e As EventArgs) Handles Text_server.TextChanged
+
     End Sub
 End Class

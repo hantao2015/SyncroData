@@ -54,6 +54,10 @@
     <Reference Include="HsPlatform">
       <HintPath>..\..\..\00RispSourceMiniUISource\RispBsUI\rispweb\bin\HsPlatform.dll</HintPath>
     </Reference>
+    <Reference Include="LumiSoft.Net, Version=2.0.4492.11923, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\SynData\packages\LumiSoft.Net.2.0.4492.11923\lib\LumiSoft.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\00RispSourceMiniUISource\RispBsUI\rispweb\bin\Newtonsoft.Json.dll</HintPath>
@@ -62,6 +66,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -124,8 +129,13 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\00RispSourceMiniUISource\RispBsUI\MiniUiAppCode\MiniUiAppCode.Platform.csproj">
+      <Project>{50b5c7e5-e78b-4b4a-a5c2-214a286f3183}</Project>
+      <Name>MiniUiAppCode.Platform</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\SynData\SynData\SynData.vbproj">
       <Project>{8a3c7503-cc49-4c88-b9bc-d55158e1962c}</Project>
       <Name>SynData</Name>
