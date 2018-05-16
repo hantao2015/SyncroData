@@ -79,7 +79,7 @@ Partial Class Form1
         Me.Text_server.Name = "Text_server"
         Me.Text_server.Size = New System.Drawing.Size(241, 21)
         Me.Text_server.TabIndex = 4
-        Me.Text_server.Text = "pop.exmail.qq.com"
+        Me.Text_server.Text = "outlook.office365.com"
         '
         'Text_port
         '
@@ -113,7 +113,7 @@ Partial Class Form1
         Me.Text_user.Name = "Text_user"
         Me.Text_user.Size = New System.Drawing.Size(241, 21)
         Me.Text_user.TabIndex = 8
-        Me.Text_user.Text = "market@realsun.biz"
+        Me.Text_user.Text = "recruitinghris@finisar.com"
         '
         'Text_pass
         '
@@ -122,7 +122,7 @@ Partial Class Form1
         Me.Text_pass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.Text_pass.Size = New System.Drawing.Size(241, 21)
         Me.Text_pass.TabIndex = 9
-        Me.Text_pass.Text = "Abc@123"
+        Me.Text_pass.Text = "Password201805"
         '
         'Label3
         '

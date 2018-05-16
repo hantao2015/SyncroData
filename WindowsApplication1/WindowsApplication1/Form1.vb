@@ -92,19 +92,19 @@ Public Class Form1
         Dim isDelete As Boolean = Check_delete.Checked
         '''''''''''''''''''''''''''''''''''''''''''''''''
         '''''''''''''''''''''''''''''''''''''''''''''''''
-        Dim resid As Long = 0
-        Dim uIDCol As String = ""
-        Dim senderCol As String = ""
-        Dim bodyTextCol As String = ""
-        Dim bodyHtmlTextCol As String = ""
-        Dim subjectCol As String = ""
+        Dim resid As Long = 579794693603
+        Dim uIDCol As String = "uid"
+        Dim senderCol As String = "address"
+        Dim bodyTextCol As String = "bodytext"
+        Dim bodyHtmlTextCol As String = "bodyhtmltext"
+        Dim subjectCol As String = "subject"
         MiniUiAppCode.Platform.Utils.LumiSoft.password = pass
         MiniUiAppCode.Platform.Utils.LumiSoft.pop3Port = popPort
         MiniUiAppCode.Platform.Utils.LumiSoft.pop3Server = popServer
         MiniUiAppCode.Platform.Utils.LumiSoft.username = user
         Dim result As List(Of LumiSoft.Net.Mail.Mail_Message) = New List(Of Mail_Message)()
         Try
-            result = MiniUiAppCode.Platform.Utils.LumiSoft.GetEmails(pst, resid, uIDCol, senderCol, bodyHtmlTextCol, bodyHtmlTextCol, subjectCol, popServer, popPort, user, pass, False)
+            result = MiniUiAppCode.Platform.Utils.LumiSoft.GetEmails(pst, resid, uIDCol, senderCol, bodyTextCol, bodyHtmlTextCol, subjectCol, popServer, popPort, user, pass, Check_delete.Checked, RichTextBox1)
         Catch ex As Exception
             Me.RichTextBox1.Text = "GetEmails Error:" + ex.Message.ToString()
         End Try
