@@ -265,38 +265,50 @@ Public Class SynProcessor
         Dim listofdataReturn As New List(Of Hashtable)
         Return SaveData2Client(rows, OneSyndata.pushdbc, strErrorMessage, listofdataReturn)
     End Function
-    Public Function FetchTaskNotFinished(ByRef errmsg As String) As Hashtable
+    Public Function FetchTaskNotFinished(ByRef errmsg As String, ByVal url As String, ByVal user As String, ByVal upass As String, Optional ByVal method As String = "") As Hashtable
 
         Dim bs As New BaseService()
-        bs.PlatformWwwUrl = OneSyndata.fetchurl
-        bs.PlatformUser = OneSyndata.fetchuser
-        bs.PlatformPassword = OneSyndata.fetchupass
+
+        bs.PlatformWwwUrl = url
+        bs.PlatformUser = user
+        bs.PlatformPassword = upass
+        SLog.Crucial("FetchTaskNotFinished:PlatformWwwUrl:" + url)
+        SLog.Crucial("FetchTaskNotFinished:PlatformUser:" + user)
+        SLog.Crucial("FetchTaskNotFinished:PlatformPassword:" + upass)
         Dim param As Hashtable = New Hashtable()
         Dim listofdata As New ArrayList()
         Dim cmscolumns As New ArrayList
         Dim rows As New List(Of Hashtable)
         Dim row As New Hashtable
-        row.Clear()
+
         Dim cmswhere As String = "uniquenamesynname='" + OneSyndata.uniquenameofsynname + "' and C3_547583460116<>'Y'"
-        param.Add("resid", OneSyndata.monitor_resid)
-        param.Add("cmswhere", OneSyndata.cmswhere)
-        param.Add("pagesize", 1)
-        param.Add("pageindex", 0)
+
+        param.Add("resid", "542290864273")
+        param.Add("cmswhere", cmswhere)
+
 
         Dim rt As PlatformResultModel = New PlatformResultModel()
+        Thread.Sleep(500)
         Try
             rt = bs.Post(bs.getMethod, param)
             If (rt.Error = 0) Then
                 rows = JsonConvert.DeserializeObject(Of List(Of Hashtable))(rt.Data.ToString())
-                row = rows(0)
-                errmsg = ""
+                SLog.Crucial("FetchTaskNotFinished:rt.Data.ToString():" + rt.Data.ToString())
+                If (rows.Count > 0) Then
+                    row = DirectCast(rows.Item(0), Hashtable)
+                    errmsg = ""
+                End If
+
             Else
+                SLog.Crucial("FetchTaskNotFinished: rt.Message:" + rt.Message)
                 errmsg = rt.Message
             End If
         Catch ex As Exception
             errmsg = ex.Message.ToString()
         End Try
-
+        SLog.Crucial("FetchTaskNotFinished:errmsg:" + errmsg)
+        SLog.Crucial("FetchTaskNotFinished:cmswhere:" + cmswhere)
+        SLog.Crucial("FetchTaskNotFinished:resid:" + OneSyndata.monitor_resid)
         Return row
     End Function
     Public Function FetchWebSourceData(ByVal intIndex As Integer, ByVal intSize As Integer, ByRef errmsg As String) As List(Of Hashtable)
@@ -599,14 +611,15 @@ Public Class SynProcessor
         Dim intPagecount As Long = 0
         Dim intIndex As Long = 0
         Dim strMsg As String = ""
-        Dim taskRow As Hashtable = FetchTaskNotFinished(strMsg)
-        If strMsg = "" And row.Count > 0 Then
-            monitorbatchid = Convert.ToString(row("REC_ID"))
+        SLog.Crucial("FetchTaskNotFinished")
+        Dim taskRow As Hashtable = FetchTaskNotFinished(strMsg, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
+
+        If strMsg = "" And taskRow.Count > 0 Then
+            monitorbatchid = Convert.ToInt64(taskRow("REC_ID"))
             taskNotFinished = taskRow
         Else
             param.Add("resid", OneSyndata.monitor_resid)
             row.Add(OneSyndata.monitoridcolumn, OneSyndata.uniquenameofsynname)
-
             row.Add("_id", 1)
             row.Add("_state", "added")
             rows.Add(row)
@@ -630,14 +643,18 @@ Public Class SynProcessor
         Dim strErrorMessage As String = ""
         Dim intPagecount As Long = 0
         Dim intIndex As Long = 0
+        Dim finishedCount As Int32 = 0
         SyncroRows = 0
         intTotal = 0
         Dim startIndex As Long = 0
         If monitorbatchid > 0 Then
             '先fetch rowscount ,根据pagesize分页获取rows
+            SLog.Crucial("taskNotFinished:" + JSON.Encode(taskNotFinished))
+            SLog.Crucial("monitorbatchid:" + JSON.Encode(monitorbatchid))
             If (taskNotFinished.Count > 0) Then
                 intTotal = Convert.ToInt32(taskNotFinished("C3_542630836091"))
-                Dim finishedCount = Convert.ToInt32(taskNotFinished("C3_545046524620"))
+                finishedCount = Convert.ToInt32(taskNotFinished("C3_545046524620"))
+                SyncroRows = finishedCount
                 startIndex = finishedCount / OneSyndata.pagesize
             Else
                 intTotal = getDataCount(strErrorMessage, OneSyndata.fetchdbc, OneSyndata.source_resid, OneSyndata.cmswhere, OneSyndata.fetchtype, OneSyndata.fetchurl, OneSyndata.fetchuser, OneSyndata.fetchupass)
@@ -648,6 +665,7 @@ Public Class SynProcessor
                 SLog.Err(strErrorMessage)
                 Return
             End If
+            SLog.Crucial("startIndex:" + startIndex.ToString())
             If intTotal > 0 Then
                 intPagecount = intTotal / OneSyndata.pagesize
                 For i As Int32 = startIndex To intPagecount
