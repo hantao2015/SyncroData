@@ -13,6 +13,7 @@ Public Class SynProcessor
     Public Property includedatalog As Boolean = False
     Public Property intTotal As Long = 0
     Public Property monitorbatchid As Long = 0
+    Public Property taskNotFinished As Hashtable
     Public Delegate Sub printMessage(ByVal msg As String)
     Public printMessageHandler As printMessage = Nothing
 
@@ -46,6 +47,7 @@ Public Class SynProcessor
         m_pst = pst
         m_syndata = syndata
         m_syndefine = syndefine
+        taskNotFinished = New Hashtable()
         pst = CmsPassport.GenerateCmsPassportBySysuser()
         If Not CheckSyndata(errmsg) Then
             Throw New Exception(errmsg)
@@ -263,7 +265,40 @@ Public Class SynProcessor
         Dim listofdataReturn As New List(Of Hashtable)
         Return SaveData2Client(rows, OneSyndata.pushdbc, strErrorMessage, listofdataReturn)
     End Function
+    Public Function FetchTaskNotFinished(ByRef errmsg As String) As Hashtable
 
+        Dim bs As New BaseService()
+        bs.PlatformWwwUrl = OneSyndata.fetchurl
+        bs.PlatformUser = OneSyndata.fetchuser
+        bs.PlatformPassword = OneSyndata.fetchupass
+        Dim param As Hashtable = New Hashtable()
+        Dim listofdata As New ArrayList()
+        Dim cmscolumns As New ArrayList
+        Dim rows As New List(Of Hashtable)
+        Dim row As New Hashtable
+        row.Clear()
+        Dim cmswhere As String = "uniquenamesynname='" + OneSyndata.uniquenameofsynname + "' and C3_547583460116<>'Y'"
+        param.Add("resid", OneSyndata.monitor_resid)
+        param.Add("cmswhere", OneSyndata.cmswhere)
+        param.Add("pagesize", 1)
+        param.Add("pageindex", 0)
+
+        Dim rt As PlatformResultModel = New PlatformResultModel()
+        Try
+            rt = bs.Post(bs.getMethod, param)
+            If (rt.Error = 0) Then
+                rows = JsonConvert.DeserializeObject(Of List(Of Hashtable))(rt.Data.ToString())
+                row = rows(0)
+                errmsg = ""
+            Else
+                errmsg = rt.Message
+            End If
+        Catch ex As Exception
+            errmsg = ex.Message.ToString()
+        End Try
+
+        Return row
+    End Function
     Public Function FetchWebSourceData(ByVal intIndex As Integer, ByVal intSize As Integer, ByRef errmsg As String) As List(Of Hashtable)
 
 
@@ -396,6 +431,7 @@ Public Class SynProcessor
                 getSyndataFromHost()
                 If OneSyndata.sysActive = "Y" Then
                     Dim batchid As Long = TimeId.CurrentMillisecondsThreadSafe()
+                    taskNotFinished.Clear()
                     StartMonitor()
                     SLog.Crucial(strMsg)
                     doPrintMessage(strMsg)
@@ -411,6 +447,7 @@ Public Class SynProcessor
                 DealSynThread()
             End If
         Catch ex As Exception
+            taskNotFinished.Clear()
             strMsg = "处理同步失败-" + OneSyndata.uniquenameofsynname + ex.Message
             SLog.Err(strMsg)
             MonitorLog(strMsg)
@@ -561,42 +598,31 @@ Public Class SynProcessor
         Dim strErrorMessage As String = ""
         Dim intPagecount As Long = 0
         Dim intIndex As Long = 0
-        param.Add("resid", OneSyndata.monitor_resid)
-        row.Add(OneSyndata.monitoridcolumn, OneSyndata.uniquenameofsynname)
-
-        row.Add("_id", 1)
-        row.Add("_state", "added")
-        rows.Add(row)
-        param.Add("data", JsonConvert.SerializeObject(rows))
-        ' If OneSyndata.pushtype = "web" Then
-        '   Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
-        Dim rt As PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
-        If rt.Error = 0 Then
-            monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
+        Dim strMsg As String = ""
+        Dim taskRow As Hashtable = FetchTaskNotFinished(strMsg)
+        If strMsg = "" And row.Count > 0 Then
+            monitorbatchid = Convert.ToString(row("REC_ID"))
+            taskNotFinished = taskRow
         Else
+            param.Add("resid", OneSyndata.monitor_resid)
+            row.Add(OneSyndata.monitoridcolumn, OneSyndata.uniquenameofsynname)
 
-            Dim strMsg As String = "web 添加监控记录失败:" + rt.Message
+            row.Add("_id", 1)
+            row.Add("_state", "added")
+            rows.Add(row)
+            param.Add("data", JsonConvert.SerializeObject(rows))
+            Dim rt As PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
+            If rt.Error = 0 Then
+                monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
+            Else
+
+                strMsg = "web 添加监控记录失败:" + rt.Message
                 SLog.Err(strMsg)
                 MonitorLog(strMsg)
                 doPrintMessage(strMsg)
             End If
-        ' Else
+        End If
 
-        'Dim listofdataReturn As New List(Of Hashtable)
-        'Try
-        '    Pst.Dbc = OneSyndata.pushdbc
-        '    Dim cr As CmsTableReturn = CmsTable.AddRecord(Pst, OneSyndata.monitor_resid, row)
-        '    monitorbatchid = cr.RecID
-        'Catch ex As Exception
-
-        '    Dim strMsg As String = "client 添加监控记录失败:" + ex.Message.ToString()
-        '    SLog.Err(strMsg)
-        '    MonitorLog(strMsg)
-        '    doPrintMessage(strMsg)
-        'End Try
-
-
-        '  End If
 
 
     End Sub
@@ -606,9 +632,17 @@ Public Class SynProcessor
         Dim intIndex As Long = 0
         SyncroRows = 0
         intTotal = 0
+        Dim startIndex As Long = 0
         If monitorbatchid > 0 Then
             '先fetch rowscount ,根据pagesize分页获取rows
-            intTotal = getDataCount(strErrorMessage, OneSyndata.fetchdbc, OneSyndata.source_resid, OneSyndata.cmswhere, OneSyndata.fetchtype, OneSyndata.fetchurl, OneSyndata.fetchuser, OneSyndata.fetchupass)
+            If (taskNotFinished.Count > 0) Then
+                intTotal = Convert.ToInt32(taskNotFinished("C3_542630836091"))
+                Dim finishedCount = Convert.ToInt32(taskNotFinished("C3_545046524620"))
+                startIndex = finishedCount / OneSyndata.pagesize
+            Else
+                intTotal = getDataCount(strErrorMessage, OneSyndata.fetchdbc, OneSyndata.source_resid, OneSyndata.cmswhere, OneSyndata.fetchtype, OneSyndata.fetchurl, OneSyndata.fetchuser, OneSyndata.fetchupass)
+            End If
+
             If strErrorMessage <> "" Then
                 MonitorLog(strErrorMessage)
                 SLog.Err(strErrorMessage)
@@ -616,7 +650,7 @@ Public Class SynProcessor
             End If
             If intTotal > 0 Then
                 intPagecount = intTotal / OneSyndata.pagesize
-                For i As Int32 = 0 To intPagecount
+                For i As Int32 = startIndex To intPagecount
                     '根据pagesize分页获取rows
                     Dim aRows As New ArrayList
                     Dim strErr As String = ""
