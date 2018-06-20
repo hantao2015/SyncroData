@@ -22,7 +22,7 @@ Public Class RealsunSynDataServerGuard
 
         For Each prc As Process In process
             If prc.ProcessName = "RealsunSynData" Then
-                prc.Kill()
+                '  prc.Kill()
 
             End If
         Next
@@ -37,7 +37,7 @@ Public Class RealsunSynDataServerGuard
             End If
             Dim H As Integer = DateAndTime.Now.Hour
             If H = 2 Then
-                killprocess()
+                '   killprocess()
             End If
 
         Catch ex As Exception

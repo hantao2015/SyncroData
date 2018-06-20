@@ -653,9 +653,14 @@ Public Class SynProcessor
             SLog.Crucial("monitorbatchid:" + JSON.Encode(monitorbatchid))
             If (taskNotFinished.Count > 0) Then
                 intTotal = Convert.ToInt32(taskNotFinished("C3_542630836091"))
-                finishedCount = Convert.ToInt32(taskNotFinished("C3_545046524620"))
-                SyncroRows = finishedCount
-                startIndex = finishedCount / OneSyndata.pagesize
+                If intTotal > 0 Then
+                    finishedCount = Convert.ToInt32(taskNotFinished("C3_545046524620"))
+                    SyncroRows = finishedCount
+                    startIndex = finishedCount / OneSyndata.pagesize
+                Else
+                    intTotal = getDataCount(strErrorMessage, OneSyndata.fetchdbc, OneSyndata.source_resid, OneSyndata.cmswhere, OneSyndata.fetchtype, OneSyndata.fetchurl, OneSyndata.fetchuser, OneSyndata.fetchupass)
+                End If
+
             Else
                 intTotal = getDataCount(strErrorMessage, OneSyndata.fetchdbc, OneSyndata.source_resid, OneSyndata.cmswhere, OneSyndata.fetchtype, OneSyndata.fetchurl, OneSyndata.fetchuser, OneSyndata.fetchupass)
             End If
