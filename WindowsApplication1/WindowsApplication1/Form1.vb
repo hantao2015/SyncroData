@@ -74,6 +74,9 @@ Public Class Form1
         Button1.PerformClick()
         Button2.PerformClick()
 
+
+
+
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs)

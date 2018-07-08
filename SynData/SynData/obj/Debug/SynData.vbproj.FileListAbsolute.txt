@@ -29,7 +29,6 @@ H:\github\SyncroData\SynData\SynData\bin\Debug\RealsunSynDataServerGuard.exe
 H:\github\SyncroData\SynData\SynData\bin\Debug\RealsunSynDataServerGuard.pdb
 H:\github\SyncroData\SynData\SynData\bin\Debug\RealsunSynDataServerGuard.xml
 H:\github\SyncroData\SynData\SynData\obj\Debug\SynData.vbprojResolveAssemblyReference.cache
-H:\github\SyncroData\SynData\SynData\obj\Debug\SynData.Form1.resources
 H:\github\SyncroData\SynData\SynData\obj\Debug\SynData.Resources.resources
 H:\github\SyncroData\SynData\SynData\obj\Debug\SynData.vbproj.GenerateResource.Cache
 H:\github\SyncroData\SynData\SynData\obj\Debug\SynData.dll
