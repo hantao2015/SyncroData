@@ -206,7 +206,7 @@ Public Class SynProcessor
 
             Dim rp As New CmsTableParam
 
-
+            'ByVal pst As CmsPassport, ByRef dbs As DbStatement, ByVal lngresid As Long, ByVal rows As ArrayList, ByVal strUniqueColumns As String, ByRef alistofRowstate As ArrayList, ByRef listofdataReturn As List(Of Hashtable), ByRef listofhash2Save As List(Of Hashtable), ByRef strRightsErrorMessage As String, ByRef strErrorMessage As String, ByVal Optional relationColumn As String = "", ByVal Optional relationColumnValue As String = "", ByVal Optional editbywhere As String = "", Optional ByRef rp As CmsTableParam = Nothing, Optional ByVal bytrans As Boolean = False
 
             If CmsTable.SaveDataBytran(Pst, dbs, OneSyndata.target_resid, rows, OneSyndata.uniquecolumns, alistofRowstate, listofdataReturn, listofhash2Save, strRightsErrorMessage, strErrorMessage, "", "", "", rp, False) = False Then
                 dbs.TransactionRollback()

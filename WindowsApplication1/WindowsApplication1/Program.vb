@@ -21,12 +21,13 @@ Public Class Program
 
     Private Shared Sub Application_ThreadException(sender As Object, e As ThreadExceptionEventArgs)
 
-        System.Windows.Forms.Application.Run(New Form1())
-
+        '  System.Windows.Forms.Application.Run(New Form1())
+        System.Windows.Forms.Application.Exit()
     End Sub
 
     Private Shared Sub CurrentDomain_UnhandledException(sender As Object, ex As UnhandledExceptionEventArgs)
-        System.Windows.Forms.Application.Run(New Form1())
+        '  System.Windows.Forms.Application.Run(New Form1())
+        System.Windows.Forms.Application.Exit()
 
     End Sub
 End Class

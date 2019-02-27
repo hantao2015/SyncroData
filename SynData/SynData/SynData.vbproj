@@ -52,8 +52,9 @@
     <Reference Include="hsopPlatform">
       <HintPath>..\..\lib\hsopPlatform.dll</HintPath>
     </Reference>
-    <Reference Include="HsPlatform">
-      <HintPath>..\..\lib\HsPlatform.dll</HintPath>
+    <Reference Include="HsPlatform, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\00RispSourceMiniUISource\RispBsUI\rispweb\bin\HsPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
