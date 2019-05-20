@@ -159,7 +159,7 @@ Public Class SynProcessor
         End If
 
         If dt IsNot Nothing Then
-            If OneSyndata.pushmethod = "ajax_InsertBatchData" Then
+            If OneSyndata.pushmethod = "ajax_InsertBatchData" Or OneSyndata.pushmethod = "ajax_InsertBatchData2" Then
                 rows = BaseService.ShowHostTableDatas_Ajax_GetDATA(dt, OneSyndata._state, OneSyndata.target_synmonitorcolumnofid, Convert.ToString(monitorbatchid), OneSyndata.sourcefields, OneSyndata.targetfields, "getrecid", OneSyndata.target_resid)
             Else
                 rows = BaseService.ShowHostTableDatas_Ajax_GetDATA(dt, OneSyndata._state, OneSyndata.target_synmonitorcolumnofid, Convert.ToString(monitorbatchid), OneSyndata.sourcefields, OneSyndata.targetfields, "")
@@ -664,7 +664,9 @@ Public Class SynProcessor
             Else
                 intTotal = getDataCount(strErrorMessage, OneSyndata.fetchdbc, OneSyndata.source_resid, OneSyndata.cmswhere, OneSyndata.fetchtype, OneSyndata.fetchurl, OneSyndata.fetchuser, OneSyndata.fetchupass)
             End If
+            If OneSyndata.pushmethod = "test" Then
 
+            End If
             If strErrorMessage <> "" Then
                 MonitorLog(strErrorMessage)
                 SLog.Err(strErrorMessage)

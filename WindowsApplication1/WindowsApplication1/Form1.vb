@@ -117,4 +117,33 @@ Public Class Form1
     Private Sub Text_server_TextChanged(sender As Object, e As EventArgs) Handles Text_server.TextChanged
 
     End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Dim popServer As String = "smtp.exmail.qq.com"
+        Dim popPort As String = "995"
+        Dim user As String = "hantao@realsun.biz"
+        Dim pass As String = "ht134021"
+        Dim isDelete As Boolean = Check_delete.Checked
+        '''''''''''''''''''''''''''''''''''''''''''''''''
+        '''''''''''''''''''''''''''''''''''''''''''''''''
+
+        Dim uIDCol As String = "uid"
+        Dim senderCol As String = "address"
+        Dim bodyTextCol As String = "bodytext"
+        Dim bodyHtmlTextCol As String = "bodyhtmltext"
+        Dim subjectCol As String = "subject"
+        CmsEnvironment.InitForClientApplication(Application.StartupPath)
+        pst = CmsPassport.GenerateCmsPassportBySysuser()
+        MiniUiAppCode.Platform.Utils.LumiSoft.password = "ht134021"
+        MiniUiAppCode.Platform.Utils.LumiSoft.pop3Port = "995"
+        MiniUiAppCode.Platform.Utils.LumiSoft.pop3Server = "smtp.exmail.qq.com"
+        MiniUiAppCode.Platform.Utils.LumiSoft.username = "hantao@realsun.biz"
+        Dim result As List(Of LumiSoft.Net.Mail.Mail_Message) = New List(Of Mail_Message)()
+        Try
+            result = MiniUiAppCode.Platform.Utils.LumiSoft.GetEmails(pst, 0, uIDCol, senderCol, bodyTextCol, bodyHtmlTextCol, subjectCol, popServer, popPort, user, pass, True, RichTextBox1)
+        Catch ex As Exception
+            Me.RichTextBox1.Text = "GetEmails Error:" + ex.Message.ToString()
+        End Try
+
+    End Sub
 End Class

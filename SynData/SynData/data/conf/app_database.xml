@@ -3,9 +3,9 @@
   <SYS_DATABASE DESC="数据库配置信息">
     <DATABASETYPE DESC="数据库HOST 0:mssql 3:oralce">0</DATABASETYPE>
     <DATABASECONTYPE DESC="数据库连接方式 1:oledbcon 2:oracleclientcon">1</DATABASECONTYPE>
-    <HOST DESC="数据库HOST">www.realsun.me\demo</HOST>
-    <PORT DESC="数据库PORT">3433</PORT>
-    <DBCMS DESC="内容数据库名称">demo1</DBCMS>
+    <HOST DESC="数据库HOST">kingofdinner.realsun.me</HOST>
+    <PORT DESC="数据库PORT">1433</PORT>
+    <DBCMS DESC="内容数据库名称">powerWorks</DBCMS>
     <DBDOC DESC="文档数据库名称">demo2</DBDOC>
     <TIMEOUT DESC="数据库连接超时（秒）">15</TIMEOUT>
     <SERVICENAME DESC="Oracle 数据库服务名称">orcl</SERVICENAME>
