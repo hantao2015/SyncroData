@@ -148,7 +148,7 @@ Public Class SynProcessor
                 Return False
             End If
             Try
-                dt = DBUtil.Convert2DataTable(webrows)
+                dt = MiniUiAppCode.Platform.DBUtil.Convert2DataTable(webrows)
             Catch ex As Exception
                 ds = Nothing
                 errmesage = ex.Message.ToString()
@@ -176,12 +176,12 @@ Public Class SynProcessor
         Return True
     End Function
 
-    Public Function SaveData2Web(ByVal data As Hashtable, ByVal url As String, ByVal user As String, ByVal upass As String, Optional ByVal method As String = "") As PlatformResultModel
+    Public Function SaveData2Web(ByVal data As Hashtable, ByVal url As String, ByVal user As String, ByVal upass As String, Optional ByVal method As String = "") As MiniUiAppCode.Platform.PlatformResultModel
         Dim bs As New BaseService()
         bs.PlatformWwwUrl = url
         bs.PlatformUser = user
         bs.PlatformPassword = upass
-        Dim rt As PlatformResultModel = New PlatformResultModel()
+        Dim rt As MiniUiAppCode.Platform.PlatformResultModel = New MiniUiAppCode.Platform.PlatformResultModel()
         Try
             If method = "" Then
                 rt = bs.Post(bs.saveMethod2, data)
@@ -224,7 +224,7 @@ Public Class SynProcessor
 
     End Function
     Public Function PushData(ByVal rows As ArrayList, ByRef strErrorMessage As String) As Boolean
-        Dim rt As PlatformResultModel
+        Dim rt As MiniUiAppCode.Platform.PlatformResultModel
         Dim blrt As Boolean
 
         If OneSyndata.pushtype = "web" Then
@@ -241,7 +241,7 @@ Public Class SynProcessor
         End If
         Return blrt
     End Function
-    Public Function PushData2Web(ByVal rows As ArrayList) As PlatformResultModel
+    Public Function PushData2Web(ByVal rows As ArrayList) As MiniUiAppCode.Platform.PlatformResultModel
 
         Dim param As Hashtable = New Hashtable()
         param.Add("resid", OneSyndata.target_resid)
@@ -287,7 +287,7 @@ Public Class SynProcessor
         param.Add("cmswhere", cmswhere)
 
 
-        Dim rt As PlatformResultModel = New PlatformResultModel()
+        Dim rt As MiniUiAppCode.Platform.PlatformResultModel = New MiniUiAppCode.Platform.PlatformResultModel()
         Thread.Sleep(500)
         Try
             rt = bs.Post(bs.getMethod, param)
@@ -328,7 +328,7 @@ Public Class SynProcessor
         param.Add("pagesize", intSize)
         param.Add("pageindex", intIndex)
         param.Add("cmscolumns", OneSyndata.sourcefields)
-        Dim rt As PlatformResultModel = New PlatformResultModel()
+        Dim rt As MiniUiAppCode.Platform.PlatformResultModel = New MiniUiAppCode.Platform.PlatformResultModel()
         Try
             rt = bs.Post(bs.getMethod, param)
             If (rt.Error = 0) Then
@@ -352,11 +352,11 @@ Public Class SynProcessor
         bs.PlatformWwwUrl = fetchurl
         bs.PlatformUser = fetchuser
         bs.PlatformPassword = fetchupass
-        Dim rt As PlatformResultModel = New PlatformResultModel()
+        Dim rt As MiniUiAppCode.Platform.PlatformResultModel = New MiniUiAppCode.Platform.PlatformResultModel()
         Try
             rt = bs.Post("Ajax_CountByWhere", param)
             If (rt.Error = 0) Then
-                total = rt.Total
+                total = rt.total
                 errmsg = ""
             Else
                 errmsg = rt.Message
@@ -405,7 +405,7 @@ Public Class SynProcessor
         param.Add("resid", "543946705485")
         param.Add("cmswhere", "C3_543946721063='" + OneSyndata.uniquenameofsynname + "'")
         param.Add("saveandget", "1")
-        Dim rt As PlatformResultModel = New PlatformResultModel()
+        Dim rt As MiniUiAppCode.Platform.PlatformResultModel = New MiniUiAppCode.Platform.PlatformResultModel()
         Try
             rt = bs.Post(m_syndefine.getOneRowMethod, param)
             If (rt.Error = 0) Then
@@ -485,7 +485,7 @@ Public Class SynProcessor
         param.Add("data", JsonConvert.SerializeObject(rows))
         'If OneSyndata.pushtype = "web" Then
         'Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
-        Dim rt As PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
+        Dim rt As MiniUiAppCode.Platform.PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
         If rt.Error = 0 Then
                 monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
             Else
@@ -532,7 +532,7 @@ Public Class SynProcessor
         param.Add("data", JsonConvert.SerializeObject(rows))
         'If OneSyndata.pushtype = "web" Then
         'Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
-        Dim rt As PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
+        Dim rt As MiniUiAppCode.Platform.PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
         If rt.Error = 0 Then
 
             Else
@@ -573,8 +573,8 @@ Public Class SynProcessor
         param.Add("data", JsonConvert.SerializeObject(rows))
         'If OneSyndata.pushtype = "web" Then
         '  Dim rt As PlatformResultModel = SaveData2Web(param, OneSyndata.pushurl, OneSyndata.pushuser, OneSyndata.pushupass)
-        Dim rt As PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
-            If rt.Error = 0 Then
+        Dim rt As MiniUiAppCode.Platform.PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
+        If rt.Error = 0 Then
                 monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
             Else
                 Dim strMsg As String = "web 添加监控记录失败:" + rt.Message
@@ -624,7 +624,7 @@ Public Class SynProcessor
             row.Add("_state", "added")
             rows.Add(row)
             param.Add("data", JsonConvert.SerializeObject(rows))
-            Dim rt As PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
+            Dim rt As MiniUiAppCode.Platform.PlatformResultModel = SaveData2Web(param, m_syndefine.baseUrl, m_syndefine.user, m_syndefine.upass)
             If rt.Error = 0 Then
                 monitorbatchid = JsonConvert.DeserializeObject(Of ArrayList)(rt.Data.ToString())(0)("REC_ID").ToString()
             Else

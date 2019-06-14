@@ -10,8 +10,8 @@ Public Class BaseService
     End Function
 
     Private Function login() As Boolean
-        Me.aRealsunClient = New RealsunClientNet(Me.PlatformWwwUrl)
-        Dim resultModel As PlatformResultModel = JsonConvert.DeserializeObject(Of PlatformResultModel)(Me.aRealsunClient.LoginPlatform(Me.PlatformUser, Me.PlatformPassword, Me.PlatformApiToken))
+        Me.aRealsunClient = New MiniUiAppCode.Platform.RealsunClientNet(Me.PlatformWwwUrl)
+        Dim resultModel As MiniUiAppCode.Platform.PlatformResultModel = JsonConvert.DeserializeObject(Of MiniUiAppCode.Platform.PlatformResultModel)(Me.aRealsunClient.LoginPlatform(Me.PlatformUser, Me.PlatformPassword, Me.PlatformApiToken))
         If (resultModel.Error = 0) Then
             Me.LoginToken = resultModel.Token
             Me.PlatformLogined = True
@@ -22,9 +22,9 @@ Public Class BaseService
         Return Me.PlatformLogined
     End Function
 
-    Public Function Post(ByVal method As String, ByVal param As Hashtable) As PlatformResultModel
+    Public Function Post(ByVal method As String, ByVal param As Hashtable) As MiniUiAppCode.Platform.PlatformResultModel
         If (Not Me.checkLogin AndAlso Not Me.login) Then
-            Dim model1 As New PlatformResultModel
+            Dim model1 As New MiniUiAppCode.Platform.PlatformResultModel
             model1.Error = 1
             model1.Message = ChrW(24179) & ChrW(21488) & ChrW(30331) & ChrW(24405) & ChrW(22833) & ChrW(36133) & ChrW(65281)
             Return model1
@@ -32,7 +32,7 @@ Public Class BaseService
         Dim requestid As Long = 0
         Dim str As String = Me.aRealsunClient.FlatformExecute(method, param, (requestid))
 
-        Return JsonConvert.DeserializeObject(Of PlatformResultModel)(str)
+        Return JsonConvert.DeserializeObject(Of MiniUiAppCode.Platform.PlatformResultModel)(str)
     End Function
     Public Shared Function ShowHostTableDatas_Ajax_GetDATA(ByVal dt As DataTable, ByVal state As String, ByVal target_synmonitorcolumnofid As String, ByVal synmonitorid As String, Optional sourcecmscolumns As String = "", Optional targetcmscolumns As String = "", Optional method As String = "", Optional targetresid As String = "") As ArrayList
         Dim result As Hashtable = New Hashtable
@@ -56,12 +56,12 @@ Public Class BaseService
                 alistofcolumn.Add("REC_ID")
             End If
             If alistofcolumn.Count > 0 Then
-                alist = DBUtil.DataTable2ArrayList(dt, alistofcolumn)
+                alist = MiniUiAppCode.Platform.DBUtil.DataTable2ArrayList(dt, alistofcolumn)
             Else
-                alist = DBUtil.DataTable2ArrayList(dt)
+                alist = MiniUiAppCode.Platform.DBUtil.DataTable2ArrayList(dt)
             End If
         Else
-            alist = DBUtil.DataTable2ArrayList(dt)
+            alist = MiniUiAppCode.Platform.DBUtil.DataTable2ArrayList(dt)
         End If
 
 
@@ -143,7 +143,7 @@ Public Class BaseService
     End Function
 
     ' Fields
-    Public Property aRealsunClient As RealsunClientNet = Nothing
+    Public Property aRealsunClient As MiniUiAppCode.Platform.RealsunClientNet = Nothing
     Public Property deleteMethod As String = "Ajax_DeleteByColumn"
     Public Property getMethod As String = "ShowHostTableDatas_Ajax"
     Public Property LoginToken As String = String.Empty
